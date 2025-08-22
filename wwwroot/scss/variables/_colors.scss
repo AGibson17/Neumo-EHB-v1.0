@@ -1,0 +1,219 @@
+﻿:root {
+    // Radii
+    --radius: 0.5rem;
+    
+    // 🌈 Neumo Brand Colors (Direct Hex Values)
+    --brand-navy: #0A1128;
+    --brand-purple: #775ED3;
+    --brand-lilac: #DACDF2;
+    --brand-white: #F7F2F9;
+    --brand-sunflower: #EFE745;
+
+    // 🎨 Surfaces & UI Tokens (CSS Variables)
+    // ---- Cards
+    --card: #FFFFFF;
+    --card-primary: var(--brand-purple);
+    --card-secondary: var(--brand-lilac);
+    --card-accent: var(--brand-sunflower);
+    --card-foreground: var(--brand-navy);
+    --card-border: var(--brand-lilac);
+
+    // ---- Buttons
+    --button: var(--brand-purple);
+    --button-hover: #6A4EC7;
+    --button-disabled: #9CA3AF;
+    --button-foreground: #FFFFFF;
+
+    // ---- Sidebar / Header / Main
+    --sidebar: var(--brand-navy);
+    --sidebar-foreground: var(--brand-white);
+    --sidebar-border: var(--brand-lilac);
+    --main: var(--brand-white);
+    --main-border: var(--brand-lilac);
+
+    // ---- State Modal & Dropdown
+    --state-modal: #FFFFFF;
+    --state-selector: var(--brand-lilac);
+    --state-border: var(--brand-purple);
+
+    // ---- Search
+    --search: #FFFFFF;
+    --search-border: var(--brand-lilac);
+
+    // ---- Pills & Badges
+    --pill: var(--brand-lilac);
+    --badge: var(--brand-purple);
+    --badge-foreground: #FFFFFF;
+
+    // ---- Typography
+    --text: var(--brand-navy);
+    --text-muted: #6B7280;
+    --text-heading: var(--brand-navy);
+
+    // ---- Color System Variables (used throughout components)
+    --color-text-body: var(--brand-navy);
+    --color-text-muted: #6B7280;
+    --color-text-label: var(--brand-navy);
+    --color-text-card: var(--brand-navy);
+    --color-text-sidebar: var(--sidebar-foreground);
+    --color-bg-main: var(--brand-white);
+    --color-bg-card: #FFFFFF;
+    --color-bg-card-footer: var(--brand-lilac);
+    --color-bg-input: #FFFFFF;
+    --color-bg-hover: var(--brand-lilac);
+    --color-bg-active: #E5E1F7;
+    --color-bg-tabbar: var(--brand-lilac);
+    --color-bg-tab-active: #FFFFFF;
+    --color-bg-sidebar: var(--sidebar);
+    --color-bg-sidebar-hover: rgba(119, 94, 211, 0.1);
+    --color-bg-sidebar-active: rgba(119, 94, 211, 0.2);
+    --color-border-card: var(--brand-lilac);
+    --color-border-input: var(--brand-lilac);
+    --color-border-hover: var(--brand-purple);
+    --color-border-sidebar: var(--sidebar-border);
+    --color-button-text: #FFFFFF;
+    --color-icon-body: var(--brand-navy);
+    --color-accent-orange: var(--brand-sunflower);
+    --color-accent-orange-alpha: rgba(239, 231, 69, 0.3);
+    --color-primary-50: #F3F1FE;
+    --color-primary-100: #E8E3FD;
+    --color-primary-600: var(--brand-purple);
+    --color-primary-700: #6A4EC7;
+    --color-primary-800: #5D43B3;
+    --color-secondary-100: var(--brand-lilac);
+    --color-secondary-200: #D2C5EF;
+    --color-secondary-300: #CABEED;
+    --color-secondary-400: #C2B6EA;
+    --color-secondary-500: #BAAFE8;
+    --color-secondary-800: var(--brand-navy);
+
+    // ---- Warning/Alert Colors (using sunflower for state-specific warnings)
+    --color-warn-50: #FEFCE8;
+    --color-warn-100: #FEF3C7;
+    --color-warn-300: #F59E0B;
+    --color-warn-800: #92400E;
+
+    // ---- Success Colors
+    --color-success-100: #DCFCE7;
+    --color-success-800: #166534;
+
+    // ---- Error Colors
+    --color-error-100: #FEE2E2;
+    --color-error-800: #991B1B;
+
+    // ---- Icons
+    --icon: var(--brand-navy);
+    --icon-muted: #6B7280;
+    --icon-sidebar: var(--sidebar-foreground);
+
+    // ---- Neumo Brand Gradient
+    --neumo-primary-gradient: linear-gradient(90deg, #AEA7F4 0%, #7349F3 100%);
+    --neumo-purple-navy-gradient: linear-gradient(90deg, var(--brand-purple) 0%, var(--brand-navy) 100%);
+    
+    // Legacy compatibility (keeping existing structure)
+    --background: var(--brand-white);
+    --foreground: var(--brand-navy);
+    --primary: var(--brand-purple);
+    --primary-foreground: #FFFFFF;
+    --secondary: var(--brand-lilac);
+    --secondary-foreground: var(--brand-navy);
+    --muted: var(--brand-lilac);
+    --muted-foreground: var(--brand-navy);
+    --accent: var(--brand-sunflower);
+    --accent-foreground: var(--brand-navy);
+    --destructive: #EF4444;
+    --destructive-foreground: #FFFFFF;
+    --border: var(--brand-lilac);
+    --input: var(--brand-lilac);
+    --ring: var(--brand-purple);
+}
+
+[data-theme="dark"] {
+    // 🌈 Neumo Brand Colors (Direct Hex Values - same in dark mode)
+    --brand-navy: #0A1128;
+    --brand-purple: #775ED3;
+    --brand-lilac: #DACDF2;
+    --brand-white: #F7F2F9;
+    --brand-sunflower: #EFE745;
+
+    // 🎨 Surfaces & UI Tokens (Adjusted for dark mode)
+    // ---- Cards
+    --card: #1A1F36;
+    --card-primary: var(--brand-purple);
+    --card-secondary: rgba(218, 205, 242, 0.2);
+    --card-accent: var(--brand-sunflower);
+    --card-foreground: var(--brand-white);
+    --card-border: rgba(218, 205, 242, 0.2);
+
+    // ---- Buttons
+    --button: var(--brand-purple);
+    --button-hover: #6A4EC7;
+    --button-disabled: #4B5563;
+    --button-foreground: #FFFFFF;
+
+    // ---- Sidebar / Header / Main
+    --sidebar: var(--brand-navy);
+    --sidebar-foreground: var(--brand-white);
+    --sidebar-border: rgba(218, 205, 242, 0.2);
+    --main: #0F172A;
+    --main-border: rgba(218, 205, 242, 0.15);
+
+    // ---- State Modal & Dropdown
+    --state-modal: #1A1F36;
+    --state-selector: rgba(218, 205, 242, 0.15);
+    --state-border: var(--brand-purple);
+
+    // ---- Search
+    --search: #1A1F36;
+    --search-border: rgba(218, 205, 242, 0.2);
+
+    // ---- Pills & Badges
+    --pill: rgba(218, 205, 242, 0.15);
+    --badge: var(--brand-purple);
+    --badge-foreground: #FFFFFF;
+
+    // ---- Warning/Alert Colors (using sunflower for state-specific warnings)
+    --color-warn-50: #1A1B0F;
+    --color-warn-100: #2D2A1A;
+    --color-warn-300: #F59E0B;
+    --color-warn-800: #FCD34D;
+
+    // ---- Success Colors
+    --color-success-100: #1A2E1A;
+    --color-success-800: #4ADE80;
+
+    // ---- Error Colors
+    --color-error-100: #2D1A1A;
+    --color-error-800: #F87171;
+
+    // ---- Typography
+    --text: var(--brand-white);
+    --text-muted: #9CA3AF;
+    --text-heading: var(--brand-white);
+
+    // ---- Icons
+    --icon: var(--brand-white);
+    --icon-muted: #9CA3AF;
+    --icon-sidebar: var(--sidebar-foreground);
+
+    // ---- Neumo Brand Gradient (same for dark mode)
+    --neumo-primary-gradient: linear-gradient(90deg, #AEA7F4 0%, #7349F3 100%);
+    --neumo-purple-navy-gradient: linear-gradient(90deg, var(--brand-purple) 0%, var(--brand-navy) 100%);
+
+    // Legacy compatibility (adjusted for dark mode)
+    --background: #0F172A;
+    --foreground: var(--brand-white);
+    --primary: var(--brand-purple);
+    --primary-foreground: #FFFFFF;
+    --secondary: rgba(218, 205, 242, 0.2);
+    --secondary-foreground: var(--brand-white);
+    --muted: rgba(218, 205, 242, 0.15);
+    --muted-foreground: var(--brand-lilac);
+    --accent: var(--brand-sunflower);
+    --accent-foreground: var(--brand-navy);
+    --destructive: #EF4444;
+    --destructive-foreground: #FFFFFF;
+    --border: rgba(218, 205, 242, 0.2);
+    --input: rgba(218, 205, 242, 0.15);
+    --ring: var(--brand-purple);
+}

@@ -1,0 +1,43 @@
+@model Umbraco.Cms.Web.Common.PublishedModels.HandbookCategoryCard
+@{
+    // Category card component using Neumo brand standards
+    // Displays category title, description, and policy count placeholder
+}
+
+<article class="category-card">
+    <a href="@Model.Url()" class="category-card__link">
+        <div class="category-card__header">
+            <div class="category-card__header-content">
+                <h3 class="category-card__title neumo-heading-bold">
+                    @Model.CategoryTitle
+                </h3>
+                <div class="category-card__icon">
+                    <i data-lucide="folder"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="category-card__body">
+            <p class="category-card__description neumo-body">
+                @Model.CategoryDescription
+            </p>
+            
+            <div class="category-card__meta">
+                <span class="badge badge-secondary">
+                    @{
+                        // Count actual policy cards under this category
+                        var policyCount = Model.Children?.Where(c => c.ContentType.Alias == "policyCard")?.Count() ?? 0;
+                    }
+                    @policyCount @(policyCount == 1 ? "Policy" : "Policies")
+                </span>
+            </div>
+        </div>
+        
+        <div class="category-card__footer">
+            <span class="btn btn--primary">
+                <span>View Category</span>
+                <i data-lucide="arrow-right"></i>
+            </span>
+        </div>
+    </a>
+</article>

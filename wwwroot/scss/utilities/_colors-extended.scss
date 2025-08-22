@@ -1,0 +1,45 @@
+/* Additional color utilities needed for Welcome content */
+
+/* Background colors with opacity */
+.bg-white { background-color: #FFFFFF; }
+.bg-black\/10 { background-color: rgba(0, 0, 0, 0.1); }
+
+/* Text colors with opacity */
+.text-white { color: #FFFFFF; }
+.text-white\/90 { color: rgba(255, 255, 255, 0.9); }
+.text-white\/80 { color: rgba(255, 255, 255, 0.8); }
+
+/* Gradient utilities */
+.bg-gradient-to-br {
+    background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
+}
+
+.from-secondary\/30 {
+    --tw-gradient-from: rgba(from var(--secondary) r g b / 0.3) var(--tw-gradient-from-position);
+    --tw-gradient-to: rgba(from var(--secondary) r g b / 0) var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.to-secondary\/10 {
+    --tw-gradient-to: rgba(from var(--secondary) r g b / 0.1) var(--tw-gradient-to-position);
+}
+
+/* Compatibility fallbacks for older browsers */
+.from-secondary\/30 {
+    --tw-gradient-from: rgba(218, 205, 242, 0.3);
+    --tw-gradient-to: rgba(218, 205, 242, 0);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.to-secondary\/10 {
+    --tw-gradient-to: rgba(218, 205, 242, 0.1);
+}
+
+/* Border with opacity */
+.border-primary\/30 { 
+    border-color: rgba(119, 94, 211, 0.3);
+}
+
+.border-secondary { 
+    border-color: var(--secondary);
+}

@@ -1,0 +1,293 @@
+﻿@inherits UmbracoViewPage
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@Umbraco.AssignedContentItem?.Name</title>
+
+    <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
+    <!-- Neumo Brand Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400;1,9..40,500;1,9..40,600;1,9..40,700&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.css" /> -->
+</head>
+
+<body>
+    <div class="layout-container">
+        <!-- Header - using proper SCSS classes -->
+        <header class="layout-header">
+            <div class="header-container">
+                <div class="header-content">
+                    <div class="header-brand">
+                        <div class="header-mobile-menu-brand">
+                            @await Html.PartialAsync("~/Views/Partials/Shared/_MobileMenu.cshtml")
+                            <img 
+                                src="~/images/neumo-mascot-default-sitting1.svg" 
+                                alt="Neumo mascot" 
+                                class="header-mascot"
+                            />
+                        </div>
+                        <img 
+                            src="~/images/rgb_neumo_wordmark-navy.png" 
+                            alt="Neumo" 
+                            class="header-brand-image"
+                        />
+                        <div class="header-brand-divider">
+                            <h1 class="header-title">Employee Handbook</h1>
+                        </div>
+                    </div>
+                    
+                    <div class="header-actions">
+                        @await Html.PartialAsync("~/Views/Partials/Shared/_WorkStateSelector.cshtml")
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Layout - using proper SCSS classes -->
+        <div class="layout-main">
+            <!-- Sidebar Navigation -->
+            <div class="layout-sidebar">
+                @await Html.PartialAsync("~/Views/Partials/Shared/_SidebarNavPanel.cshtml")
+            </div>
+
+            <!-- Content Panel -->
+            <main class="layout-content">
+                <div class="layout-content-container">
+                    @RenderBody()
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- State Policy Modal -->
+    <div id="modal" class="modal-overlay" style="display: none;" onclick="closeModal()">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 id="modal-title">Modal Title</h3>
+                <button onclick="closeModal()" class="modal-close-button">×</button>
+            </div>
+            <div class="modal-body">
+                <div id="modal-content" class="neumo-body">
+                    Modal content goes here
+                </div>
+                <div style="margin-top: 1.5rem; text-align: center;">
+                    <button onclick="closeModal()" class="btn btn--outline">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showStateModal(policyId, stateName) {
+            document.getElementById('modal-title').textContent = stateName + ' Policy';
+            
+            // Find the state overlay content for this policy and state
+            let content = '<p>No additional state-specific policy content available for ' + stateName + '.</p>';
+            
+            // Look for the hidden content in the policy cards
+            const policyCards = document.querySelectorAll('.policy-accordion');
+            policyCards.forEach(function(card) {
+                const stateButtons = card.querySelectorAll('.policy-accordion__state-btn');
+                stateButtons.forEach(function(button) {
+                    const buttonPolicyId = button.getAttribute('data-policy-id');
+                    const buttonStateName = button.getAttribute('data-state-name');
+                    
+                    if (buttonPolicyId === policyId && buttonStateName === stateName) {
+                        const hiddenContent = button.parentElement.querySelector('.hidden-state-content');
+                        if (hiddenContent && hiddenContent.innerHTML.trim()) {
+                            content = hiddenContent.innerHTML;
+                        }
+                    }
+                });
+            });
+            
+            document.getElementById('modal-content').innerHTML = content;
+            document.getElementById('modal').style.display = 'block';
+        }
+        
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+        
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+
+    <!-- CEO Letter Modal for First-Time Visitors -->
+    <div id="ceo-letter-modal" class="ceo-letter-overlay" style="display: none;">
+        <div class="ceo-letter-modal">
+            <div class="ceo-letter-content">
+                <div class="ceo-letter-header">
+                    <div class="ceo-letter-header-content">
+                        <div class="ceo-letter-header-text">
+                            <img src="/images/rgb_neumo_wordmark-white.png" alt="Neumo" class="ceo-letter-logo" />
+                        </div>
+                        <div class="ceo-letter-header-mascot">
+                            <img src="/images/neumo-mascot-navy-downDog-reflect.svg" alt="Neumo Mascot" class="ceo-header-mascot" />
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="ceo-letter-body">
+                    <h1 class="ceo-letter-title neumo-heading-bold">Welcome to Neumo!</h1>
+                    <p class="ceo-letter-intro neumo-body">
+                        Welcome to the team! Whether you are just starting out or have been with us for years, we're so excited to have you as a part of our organization.
+                    </p>
+                    
+                    <p class="neumo-body">
+                        You are the foundation of our success. It is through your talent, commitment, and collaboration that we deliver the services our customers depend on and create new opportunities for growth and innovation. With nearly 100 years of public sector experience, we understand the challenges our clients face—and we're proud to stand alongside them every step of the way.
+                    </p>
+                    
+                    <div class="ceo-letter-section">
+                        <h3 class="neumo-heading-bold">Our Mission:</h3>
+                        <p class="neumo-body">
+                            Deliver exceptional quality, unparalleled service, and a customer-focused experience that fosters trust and integrity. We strive to exceed expectations and build lasting partnerships that drive success for our customers and the communities we serve.
+                        </p>
+                    </div>
+                    
+                    <div class="ceo-letter-section">
+                        <h3 class="neumo-heading-bold">Our Core Values:</h3>
+                        <p class="neumo-body">
+                            At Neumo, our core values guide our decisions, shape our culture, and define how we interact with our clients, partners, and each other.
+                        </p>
+                        
+                        <div class="ceo-letter-values">
+                            <div class="ceo-value-item">
+                                <h4 class="neumo-heading-bold">Trust:</h4>
+                                <p class="neumo-body">We genuinely care for those around us, are respectful, and lead by example. We share what we know to make those around us better.</p>
+                            </div>
+                            
+                            <div class="ceo-value-item">
+                                <h4 class="neumo-heading-bold">Client-Focused:</h4>
+                                <p class="neumo-body">Our customers, partners, and you are our priority. We provide meaningful expertise by actively listening and delivering on our commitments.</p>
+                            </div>
+                            
+                            <div class="ceo-value-item">
+                                <h4 class="neumo-heading-bold">Integrity:</h4>
+                                <p class="neumo-body">We uphold the values and principles of the Company in every action and decision, doing the right thing for our customers, partners, and you.</p>
+                            </div>
+                            
+                            <div class="ceo-value-item">
+                                <h4 class="neumo-heading-bold">Responsive:</h4>
+                                <p class="neumo-body">We act with a sense of urgency for our customers, partners, and you, always engaged and ready to perform.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="neumo-body">
+                        We all make choices. Thank you for choosing Neumo. We're glad you're here—and we're looking forward to what we'll accomplish together.
+                    </p>
+                    
+                    <div class="ceo-letter-closing">
+                        <p class="neumo-body">Onward,</p>
+                        <img src="/images/CEO-signature.png" alt="Paul Colangelo Signature" class="ceo-signature" />
+                        <div class="ceo-info">
+                            <p class="neumo-heading-bold">Paul Colangelo</p>
+                            <p class="neumo-body">Chief Executive Officer</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="ceo-letter-footer">
+                    <button onclick="closeCEOLetterModal()" class="btn btn--primary ceo-letter-close-btn">
+                        Let's Get Started!
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // CEO Letter Modal Functions
+        function showCEOLetterModal() {
+            document.getElementById('ceo-letter-modal').style.display = 'flex';
+        }
+        
+        function closeCEOLetterModal() {
+            document.getElementById('ceo-letter-modal').style.display = 'none';
+            // Set cookie to remember that user has seen the letter
+            setCookie('ceo_letter_shown', 'true', 365); // Cookie expires in 1 year
+            
+            // Navigate to Getting Started tab for a handbook-like experience
+            navigateToGettingStarted();
+        }
+        
+        function navigateToGettingStarted() {
+            // Check if we're on the home page (has tab content sections)
+            const hasTabContent = document.querySelector('.tab-content');
+            
+            if (hasTabContent) {
+                // We're on home page - simulate clicking the Getting Started tab
+                const gettingStartedTab = document.querySelector('[data-tab="guide"]');
+                if (gettingStartedTab) {
+                    gettingStartedTab.click();
+                }
+            } else {
+                // We're on a different page - navigate to home with Getting Started tab
+                localStorage.setItem('activeTab', 'guide');
+                window.location.href = '/#guide';
+            }
+        }
+        
+        function setCookie(name, value, days) {
+            const expires = new Date();
+            expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+            document.cookie = name + '=' + value + ';expires=' + expires.toUTCString() + ';path=/';
+        }
+        
+        function getCookie(name) {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for(let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+        
+        // Check if user is first-time visitor and show CEO letter modal
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!getCookie('ceo_letter_shown')) {
+                // Small delay to let page load completely
+                setTimeout(function() {
+                    showCEOLetterModal();
+                }, 500);
+            }
+        });
+        
+        // Close modal on Escape key (for CEO letter too)
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const ceoModal = document.getElementById('ceo-letter-modal');
+                if (ceoModal.style.display === 'flex') {
+                    closeCEOLetterModal();
+                } else {
+                    closeModal();
+                }
+            }
+        });
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
+    
+    <!-- Policy Click Tracking -->
+    <script src="/js/policy-click-tracking.js" asp-append-version="true"></script>
+    
+    <!-- Handbook Search -->
+    <script src="/js/handbook-search.js" asp-append-version="true"></script>
+</body>
+
+</html>

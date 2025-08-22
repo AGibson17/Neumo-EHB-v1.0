@@ -1,0 +1,117 @@
+﻿@inherits UmbracoViewPage
+
+@*
+   Sidebar navigation component using proper SCSS classes
+   Features: tab-based navigation with active states and icons
+*@
+
+<nav class="sidebar-nav" role="navigation">
+    <div class="sidebar-nav__container">
+        <div class="sidebar-nav__header">
+            <h2 class="sidebar-nav__title">Navigation</h2>
+        </div>
+        
+        <div class="sidebar-nav__items">
+            <a 
+                href="/#welcome"
+                data-tab="welcome"
+                class="sidebar-nav__button sidebar-nav__button--active"
+            >
+                <svg class="sidebar-nav__button__icon" fill="currentColor" viewBox="0 0 256 256">
+                    <path d="M224,115.55V208a16,16,0,0,1-16,16H168a16,16,0,0,1-16-16V168a8,8,0,0,0-8-8H112a8,8,0,0,0-8,8v40a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V115.55a16,16,0,0,1,5.17-11.78l80-75.48.11-.11a16,16,0,0,1,21.53,0,1.14,1.14,0,0,0,.11.11l80,75.48A16,16,0,0,1,224,115.55Z"></path>
+                </svg>
+                <span class="sidebar-nav__button__text">Welcome</span>
+            </a>
+
+            <a 
+                href="/#guide"
+                data-tab="guide"
+                class="sidebar-nav__button"
+            >
+                <svg class="sidebar-nav__button__icon" fill="none" stroke="currentColor" viewBox="0 0 256 256">
+                    <circle cx="128" cy="128" r="96" stroke-width="16"/>
+                    <circle cx="128" cy="120" r="12" fill="currentColor"/>
+                    <path d="m128 144 0 40" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+                </svg>
+                <span class="sidebar-nav__button__text">Getting Started</span>
+            </a>
+
+            <a 
+                href="/#handbook"
+                data-tab="handbook"
+                class="sidebar-nav__button"
+            >
+                <svg class="sidebar-nav__button__icon" fill="none" stroke="currentColor" viewBox="0 0 256 256">
+                    <path d="M48 216a24 24 0 0 1 24-24h136V40H72a24 24 0 0 0-24 24v152Z" stroke-width="16"/>
+                    <polyline points="48,216 48,216 208,216" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+                </svg>
+                <span class="sidebar-nav__button__text">Employee Handbook</span>
+            </a>
+
+            <a 
+                href="/#support"
+                data-tab="support"
+                class="sidebar-nav__button"
+            >
+                <svg class="sidebar-nav__button__icon" fill="none" stroke="currentColor" viewBox="0 0 256 256">
+                    <circle cx="128" cy="128" r="96" stroke-width="16"/>
+                    <path d="m79 168 20-20 20 20M157 168l20-20 20 20M128 80v56l16 16" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+                </svg>
+                <span class="sidebar-nav__button__text">FAQs/Support</span>
+            </a>
+        </div>
+    </div>
+</nav>
+
+<script>
+    // Navigation state management with proper SCSS classes
+    document.addEventListener('DOMContentLoaded', function() {
+        const navItems = document.querySelectorAll('[data-tab]');
+        
+        navItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                const tabId = this.getAttribute('data-tab');
+                
+                // Check if we're on the home page (has tab content sections)
+                const hasTabContent = document.querySelector('.tab-content');
+                
+                if (hasTabContent) {
+                    // We're on home page - prevent default link behavior and handle as tab switch
+                    e.preventDefault();
+                    
+                    // Remove active state from all nav items
+                    navItems.forEach(nav => {
+                        nav.classList.remove('sidebar-nav__button--active');
+                    });
+                    
+                    // Add active state to clicked item
+                    this.classList.add('sidebar-nav__button--active');
+                    
+                    // Store active tab
+                    localStorage.setItem('activeTab', tabId);
+                    
+                    // Trigger custom event for other components to handle
+                    document.dispatchEvent(new CustomEvent('tabChanged', { 
+                        detail: { tabId } 
+                    }));
+                } else {
+                    // We're on a different page - store the tab preference and allow navigation
+                    localStorage.setItem('activeTab', tabId);
+                    // Link navigation will happen naturally
+                }
+            });
+        });
+        
+        // Initialize from localStorage or default to welcome
+        const savedTab = localStorage.getItem('activeTab') || 'welcome';
+        const activeItem = document.querySelector(`[data-tab="${savedTab}"]`);
+        if (activeItem) {
+            // Remove active from all first
+            navItems.forEach(nav => {
+                nav.classList.remove('sidebar-nav__button--active');
+            });
+            // Add active to saved tab
+            activeItem.classList.add('sidebar-nav__button--active');
+        }
+    });
+</script>

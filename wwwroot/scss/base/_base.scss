@@ -1,0 +1,95 @@
+﻿/* ==========================================================================
+   Global Base Styles & Reset
+   ========================================================================= */
+
+/* Box sizing + field elements */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+::backdrop,
+::file-selector-button {
+    box-sizing: border-box;
+    border-color: var(--border, currentColor);
+    outline-color: color-mix(in oklch, var(--ring), transparent 50%);
+}
+
+/* Root HTML */
+html {
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+    tab-size: 4;
+    tab-size: 4;
+    height: 100%;
+    font-family: var(--font-sans);
+    background-color: var(--color-bg-main);
+    color: var(--color-text-body);
+}
+
+/* Body Reset */
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100svh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+    background-color: var(--color-bg-main);
+    color: var(--color-text-body);
+    transition: opacity 0.2s ease;
+}
+
+/* Page transition states */
+body.page-fade-in {
+    animation: bodyFadeIn 0.3s ease-out;
+}
+
+body.page-transitioning-out {
+    opacity: 0.7;
+}
+
+@keyframes bodyFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Remove default padding on common elements */
+h1, h2, h3, h4, p,
+ul, ol, li,
+figure, blockquote,
+dl, dd {
+    margin: 0;
+    padding: 0;
+}
+
+/* Inherit fonts for form controls */
+input, button, textarea, select {
+    font: inherit;
+    color: inherit;
+}
+
+/* Search highlighting */
+mark {
+    background: linear-gradient(135deg, var(--brand-sunflower), rgba(239, 231, 69, 0.8));
+    color: var(--brand-navy);
+    padding: 0.125em 0.25em;
+    border-radius: 0.25rem;
+    font-weight: 600;
+    box-shadow: 0 1px 2px rgba(119, 94, 211, 0.1);
+}
+
+/* Remove animations for users with reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

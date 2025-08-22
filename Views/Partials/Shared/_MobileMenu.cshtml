@@ -1,0 +1,199 @@
+@*
+   Mobile menu component for tab navigation
+   Features: hamburger menu button, slide-out navigation panel
+*@
+
+<div class="mobile-menu" id="mobileMenu">
+    <!-- Mobile Menu Button -->
+    <button 
+        type="button"
+        class="mobile-menu__trigger"
+        id="mobileMenuTrigger"
+        onclick="toggleMobileMenu()"
+        aria-expanded="false"
+        aria-controls="mobileMenuPanel"
+        aria-label="Open navigation menu"
+    >
+        <span class="mobile-menu__trigger__icon" id="mobileMenuIcon">
+            <i data-lucide="menu" class="icon-menu"></i>
+        </span>
+    </button>
+
+    <!-- Mobile Menu Overlay -->
+    <div 
+        class="mobile-menu__overlay" 
+        id="mobileMenuOverlay"
+        onclick="closeMobileMenu()"
+        style="display: none;"
+    ></div>
+
+    <!-- Mobile Menu Panel -->
+    <nav 
+        class="mobile-menu__panel" 
+        id="mobileMenuPanel"
+        role="navigation"
+        aria-label="Mobile navigation"
+        style="transform: translateX(-100%);"
+    >
+        <div class="mobile-menu__panel__header">
+            <h2 class="mobile-menu__panel__title">Navigation</h2>
+            <button 
+                type="button"
+                class="mobile-menu__panel__close"
+                onclick="closeMobileMenu()"
+                aria-label="Close navigation menu"
+            >
+                <i data-lucide="x" class="icon-close"></i>
+            </button>
+        </div>
+        
+        <div class="mobile-menu__panel__content">
+            <a 
+                href="/#welcome"
+                data-tab="welcome"
+                class="mobile-menu__nav-button mobile-menu__nav-button--active"
+                onclick="handleMobileNavClick(this)"
+            >
+                <svg class="mobile-menu__nav-button__icon" fill="currentColor" viewBox="0 0 256 256">
+                    <path d="M224,115.55V208a16,16,0,0,1-16,16H168a16,16,0,0,1-16-16V168a8,8,0,0,0-8-8H112a8,8,0,0,0-8,8v40a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V115.55a16,16,0,0,1,5.17-11.78l80-75.48.11-.11a16,16,0,0,1,21.53,0,1.14,1.14,0,0,0,.11.11l80,75.48A16,16,0,0,1,224,115.55Z"></path>
+                </svg>
+                <span class="mobile-menu__nav-button__text">Welcome</span>
+            </a>
+
+            <a 
+                href="/#guide"
+                data-tab="guide"
+                class="mobile-menu__nav-button"
+                onclick="handleMobileNavClick(this)"
+            >
+                <svg class="mobile-menu__nav-button__icon" fill="none" stroke="currentColor" viewBox="0 0 256 256">
+                    <circle cx="128" cy="128" r="96" stroke-width="16"/>
+                    <circle cx="128" cy="120" r="12" fill="currentColor"/>
+                    <path d="m128 144 0 40" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+                </svg>
+                <span class="mobile-menu__nav-button__text">Getting Started</span>
+            </a>
+
+            <a 
+                href="/#handbook"
+                data-tab="handbook"
+                class="mobile-menu__nav-button"
+                onclick="handleMobileNavClick(this)"
+            >
+                <svg class="mobile-menu__nav-button__icon" fill="none" stroke="currentColor" viewBox="0 0 256 256">
+                    <path d="M48 216a24 24 0 0 1 24-24h136V40H72a24 24 0 0 0-24 24v152Z" stroke-width="16"/>
+                    <polyline points="48,216 48,216 208,216" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+                </svg>
+                <span class="mobile-menu__nav-button__text">Employee Handbook</span>
+            </a>
+
+            <a 
+                href="/#feedback"
+                data-tab="feedback"
+                class="mobile-menu__nav-button"
+                onclick="handleMobileNavClick(this)"
+            >
+                <svg class="mobile-menu__nav-button__icon" fill="none" stroke="currentColor" viewBox="0 0 256 256">
+                    <path d="M216 48H40a16 16 0 0 0-16 16v160a15.84 15.84 0 0 0 9.25 14.5A16.13 16.13 0 0 0 40 240a15.89 15.89 0 0 0 10.25-3.78.69.69 0 0 0 .13-.11L82.5 208H216a16 16 0 0 0 16-16V64a16 16 0 0 0-16-16Z" stroke-width="16"/>
+                    <path d="m88 112 40 32 40-32" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+                </svg>
+                <span class="mobile-menu__nav-button__text">Feedback & Support</span>
+            </a>
+        </div>
+    </nav>
+</div>
+
+<script>
+let isMobileMenuOpen = false;
+
+function toggleMobileMenu() {
+    if (isMobileMenuOpen) {
+        closeMobileMenu();
+    } else {
+        openMobileMenu();
+    }
+}
+
+function openMobileMenu() {
+    const overlay = document.getElementById('mobileMenuOverlay');
+    const panel = document.getElementById('mobileMenuPanel');
+    const trigger = document.getElementById('mobileMenuTrigger');
+    const icon = document.getElementById('mobileMenuIcon');
+    
+    overlay.style.display = 'block';
+    panel.style.transform = 'translateX(0)';
+    trigger.setAttribute('aria-expanded', 'true');
+    trigger.setAttribute('aria-label', 'Close navigation menu');
+    
+    // Change icon to X
+    icon.innerHTML = '<i data-lucide="x" class="icon-close"></i>';
+    
+    // Prevent body scroll
+    document.body.style.overflow = 'hidden';
+    
+    isMobileMenuOpen = true;
+    
+    // Re-initialize Lucide icons
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+}
+
+function closeMobileMenu() {
+    const overlay = document.getElementById('mobileMenuOverlay');
+    const panel = document.getElementById('mobileMenuPanel');
+    const trigger = document.getElementById('mobileMenuTrigger');
+    const icon = document.getElementById('mobileMenuIcon');
+    
+    overlay.style.display = 'none';
+    panel.style.transform = 'translateX(-100%)';
+    trigger.setAttribute('aria-expanded', 'false');
+    trigger.setAttribute('aria-label', 'Open navigation menu');
+    
+    // Change icon back to menu
+    icon.innerHTML = '<i data-lucide="menu" class="icon-menu"></i>';
+    
+    // Restore body scroll
+    document.body.style.overflow = '';
+    
+    isMobileMenuOpen = false;
+    
+    // Re-initialize Lucide icons
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+}
+
+function handleMobileNavClick(element) {
+    // Update active state
+    const buttons = document.querySelectorAll('.mobile-menu__nav-button');
+    buttons.forEach(btn => btn.classList.remove('mobile-menu__nav-button--active'));
+    element.classList.add('mobile-menu__nav-button--active');
+    
+    // Close mobile menu
+    closeMobileMenu();
+    
+    // Let the navigation happen naturally
+    return true;
+}
+
+// Close mobile menu when clicking outside or on escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && isMobileMenuOpen) {
+        closeMobileMenu();
+    }
+});
+
+// Update active state based on current tab
+function updateMobileMenuActiveState(activeTab) {
+    const buttons = document.querySelectorAll('.mobile-menu__nav-button');
+    buttons.forEach(btn => {
+        const tabData = btn.getAttribute('data-tab');
+        if (tabData === activeTab) {
+            btn.classList.add('mobile-menu__nav-button--active');
+        } else {
+            btn.classList.remove('mobile-menu__nav-button--active');
+        }
+    });
+}
+</script>

@@ -1,0 +1,101 @@
+@model Umbraco.Cms.Web.Common.PublishedModels.PolicyCard
+@{
+    // Policy accordion component using Neumo brand standards
+    // Displays policy title, summary, full content, and state overlays
+    
+    // Extract state names for data attributes
+    var stateNames = new List<string>();
+    if (Model.StateOverlays?.Any() == true)
+    {
+        foreach (var stateOverlay in Model.StateOverlays)
+        {
+            var overlay = stateOverlay.Content as Umbraco.Cms.Web.Common.PublishedModels.StateOverlay;
+            if (overlay?.StateName != null)
+            {
+                stateNames.Add(overlay.StateName);
+            }
+        }
+    }
+}
+
+<details class="policy-accordion" 
+         id="policy-@Model.Id"
+         data-state-names="@string.Join(",", stateNames.Distinct())"
+         data-policy-id="@Model.Id"
+         data-policy-title="@Model.PolicyTitle">
+    <summary class="policy-accordion__summary">
+        <div class="policy-accordion__header">
+            <div class="policy-accordion__header-content">
+                <h3 class="policy-accordion__title neumo-heading-bold">
+                    @Model.PolicyTitle
+                </h3>
+                <div class="policy-accordion__icon">
+                    <i data-lucide="chevron-down"></i>
+                </div>
+            </div>
+            @if (Model.RevisionDate != DateTime.MinValue)
+            {
+                <div class="policy-accordion__date">
+                    <span class="badge badge-secondary">
+                        Updated @Model.RevisionDate.ToString("MMM dd, yyyy")
+                    </span>
+                </div>
+            }
+        </div>
+        
+        <div class="policy-accordion__summary-preview">
+            <p class="policy-accordion__summary-text neumo-body">
+                @Html.Raw(Model.Summary)
+            </p>
+            
+            @if (Model.StateOverlays?.Any() == true)
+            {
+                <div class="policy-accordion__state-indicators">
+                    <span class="badge badge-warning">
+                        <i data-lucide="map-pin"></i>
+                        State-specific information available
+                    </span>
+                </div>
+            }
+            
+            <div class="policy-accordion__view-hint">
+                <span class="policy-accordion__view-text neumo-body">Click to view full policy</span>
+            </div>
+        </div>
+    </summary>
+    
+    <div class="policy-accordion__content">
+        <div class="policy-accordion__full-content">
+            <h4 class="policy-accordion__section-title neumo-heading-bold">Full Policy</h4>
+            <div class="policy-accordion__full-text neumo-body">
+                @Html.Raw(Model.FullPolicyText)
+            </div>
+        </div>
+        
+        @if (Model.StateOverlays?.Any() == true)
+        {
+            <div class="policy-accordion__state-policies">
+                <h4 class="policy-accordion__section-title neumo-heading-bold">State-Specific Policies</h4>
+                @foreach (var stateOverlay in Model.StateOverlays)
+                {
+                    var overlay = stateOverlay.Content as Umbraco.Cms.Web.Common.PublishedModels.StateOverlay;
+                    if (overlay != null && !string.IsNullOrEmpty(overlay.StatePolicyText?.ToString()))
+                    {
+                        <div class="policy-accordion__state-policy" data-state-names="@overlay.StateName">
+                            <button type="button" class="btn btn--outline policy-accordion__state-btn" 
+                                    data-state-name="@overlay.StateName"
+                                    data-policy-id="@Model.Id"
+                                    onclick="showStateModal('@Model.Id', '@overlay.StateName')">
+                                <i data-lucide="map-pin"></i>
+                                <span>View @overlay.StateName Policy</span>
+                            </button>
+                            <div class="hidden-state-content" style="display: none;">
+                                @Html.Raw(overlay.StatePolicyText)
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        }
+    </div>
+</details>

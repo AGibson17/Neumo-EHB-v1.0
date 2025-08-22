@@ -1,0 +1,26 @@
+﻿.neumo-heading {
+    font-family: var(--font-serif);
+    font-weight: 300;
+}
+
+.neumo-heading-bold {
+    font-family: var(--font-serif);
+    font-weight: 600;
+}
+
+.neumo-eyebrow {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+}
+
+.neumo-body {
+    font-family: var(--font-sans);
+    font-weight: 400;
+}
+
+.neumo-gradient-bg {
+    background: var(--neumo-primary-gradient);
+}

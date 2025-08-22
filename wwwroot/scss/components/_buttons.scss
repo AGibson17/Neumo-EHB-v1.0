@@ -1,0 +1,229 @@
+﻿// ───── NEUMO BUTTON COMPONENTS ─────
+// Button and interactive element patterns
+//
+// 🚫 NEVER USE: class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+// ✅ ALWAYS USE: class="btn--primary"
+//
+// These semantic button classes ensure brand consistency and maintainability.
+
+// Base button
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+    border-radius: 0.5rem; // rounded-lg
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 150ms ease;
+    cursor: pointer;
+    outline: none;
+    border: 1px solid transparent;
+    
+    &:disabled {
+        pointer-events: none;
+        opacity: 0.5;
+    }
+    
+    &:focus-visible {
+        outline: 2px solid var(--ring);
+        outline-offset: 2px;
+    }
+}
+
+// Button variants
+.btn--primary {
+    @extend .btn;
+    background-color: var(--button);
+    color: var(--button-foreground);
+    padding: 0.5rem 1rem;
+    
+    &:hover {
+        background-color: var(--button-hover);
+    }
+}
+
+.btn--secondary {
+    @extend .btn;
+    background-color: var(--card-secondary);
+    color: var(--card-foreground);
+    border-color: var(--card-border);
+    padding: 0.5rem 1rem;
+    
+    &:hover {
+        background-color: var(--brand-lilac);
+    }
+}
+
+// Icon buttons
+.icon-button {
+    @extend .btn;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+    background-color: var(--button);
+    color: var(--button-foreground);
+    
+    &:hover {
+        background-color: var(--button-hover);
+    }
+    
+    &--brand-lilac {
+        background-color: var(--brand-lilac);
+        color: var(--brand-navy);
+    }
+}
+
+// State selector button (dropdown trigger)
+.state-selector-btn {
+    @extend .btn;
+    width: 12rem; // w-48
+    justify-content: space-between;
+    height: 2.25rem; // h-9
+    padding: 0.5rem 1rem;
+    background-color: var(--background);
+    border-color: var(--border);
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    
+    &:hover {
+        background-color: var(--accent);
+        color: var(--accent-foreground);
+    }
+}
+
+// Link buttons
+.btn-link {
+    color: var(--primary);
+    text-decoration: underline;
+    font-weight: 500;
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: color 150ms ease;
+    
+    &:hover {
+        color: var(--button-hover);
+    }
+}
+
+// Interactive states
+.has-icon {
+    svg {
+        width: 1rem;
+        height: 1rem;
+        flex-shrink: 0;
+    }
+}
+
+// Legacy button class for compatibility
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    padding: 0.5rem 1rem;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    text-align: center;
+    text-decoration: none;
+    line-height: 1.25;
+    user-select: none;
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+/* PRIMARY BUTTON */
+.button-primary {
+    background-color: var(--color-primary-600);
+    color: var(--color-button-text);
+    border-color: var(--color-primary-600);
+
+    &:hover {
+        background-color: var(--color-primary-700);
+        border-color: var(--color-primary-700);
+    }
+
+    &:active {
+        background-color: var(--color-primary-800);
+        border-color: var(--color-primary-800);
+    }
+}
+
+/* SECONDARY BUTTON */
+.button-secondary {
+    background-color: var(--color-secondary-100);
+    color: var(--color-secondary-800);
+    border-color: var(--color-secondary-300);
+
+    &:hover {
+        background-color: var(--color-secondary-200);
+        border-color: var(--color-secondary-400);
+    }
+
+    &:active {
+        background-color: var(--color-secondary-300);
+        border-color: var(--color-secondary-500);
+    }
+}
+
+/* OUTLINE BUTTON */
+.button-outline {
+    background-color: transparent;
+    color: var(--color-primary-600);
+    border-color: var(--color-primary-600);
+
+    &:hover {
+        background-color: var(--color-primary-50);
+    }
+
+    &:active {
+        background-color: var(--color-primary-100);
+    }
+}
+
+/* GHOST BUTTON */
+.button-ghost {
+    background-color: transparent;
+    color: var(--color-text-muted);
+    border-color: transparent;
+
+    &:hover {
+        background-color: var(--color-bg-hover);
+    }
+
+    &:active {
+        background-color: var(--color-bg-active);
+    }
+}
+
+/* FULL WIDTH UTILITY */
+.button-full {
+    width: 100%;
+    display: flex;
+}
+
+// Work State Selector specific styles
+.selected-state-display {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.popover-container {
+    position: relative;
+}
+
+.chevron-icon {
+    opacity: 0.5;
+}

@@ -1,0 +1,186 @@
+﻿@inherits UmbracoViewPage<Umbraco.Cms.Web.Common.PublishedModels.HandbookHomePage>
+@{
+    Layout = "~/Views/Layouts/_Layout.cshtml";
+}
+
+<!-- Main content container with tab-based switching -->
+<div id="main-content" class="main-content">
+    
+    <!-- Welcome Tab Content -->
+    <div id="content-welcome" class="tab-content tab-content--active">
+        @await Html.PartialAsync("~/Views/Partials/Shared/_WelcomeContent.cshtml")
+    </div>
+
+    <!-- Guide Tab Content -->
+    <div id="content-guide" class="tab-content">
+        @await Html.PartialAsync("~/Views/Partials/Shared/_GuideContents.cshtml")
+    </div>
+
+    <!-- Handbook Tab Content -->
+    <div id="content-handbook" class="tab-content">
+        <div class="handbook-content">
+            <div class="content-width">
+
+                <!-- Header -->
+                <div class="handbook-header">
+                    <div class="handbook-header__content">
+                        <h2 class="handbook-header__title neumo-heading-bold">
+                            @(Model.PageTitle ?? "Employee Handbook")
+                        </h2>
+
+                        @if (!string.IsNullOrWhiteSpace(Model.IntroText?.ToHtmlString()))
+                        {
+                            <div class="handbook-header__description neumo-body">
+                                @Html.Raw(Model.IntroText)
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="handbook-header__description neumo-body">
+                                Browse policy categories to find the information you need.
+                            </p>
+                        }
+                    </div>
+
+                    <div class="handbook-header__icon">
+                        <i data-lucide="book-open"></i>
+                    </div>
+                </div>
+
+                <!-- Modern Search Component -->
+                <div class="handbook-search">
+                    <div class="handbook-search__container">
+                        <div class="handbook-search__header">
+                            <h2 class="neumo-heading-bold">Find What You Need</h2>
+                            <p class="neumo-body">Search through policies, procedures, and handbook content</p>
+                        </div>
+
+                        <div class="handbook-search__input-wrapper" role="combobox" aria-expanded="false" aria-owns="searchResults" aria-haspopup="listbox">
+                            <input 
+                                type="text" 
+                                class="handbook-search__input neumo-body" 
+                                placeholder="Search policies, keywords, or topics..."
+                                id="handbookSearch"
+                                aria-autocomplete="list"
+                                aria-controls="searchResults"
+                                aria-activedescendant=""
+                                autocomplete="off"
+                            />
+                            <!-- Wrap icon so absolute positioning survives Lucide replacement -->
+                            <span class="handbook-search__icon"><i data-lucide="search"></i></span>
+                            <button class="handbook-search__clear" type="button" aria-label="Clear search">
+                                <i data-lucide="x"></i>
+                            </button>
+
+                            <!-- Search Results Dropdown -->
+                            <div class="handbook-search__results" id="searchResults" role="listbox" aria-label="Search results"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Categories -->
+                <div class="categories-section">
+                    <div class="categories-section__header">
+                        <h3 class="categories-section__title neumo-heading-bold">Policy Categories</h3>
+                        <span class="badge badge-secondary">
+                            @{
+                                var count = Model.CategoriesToDisplay?.Count() ?? 0;
+                            }
+                            @count Categories
+                        </span>
+                    </div>
+
+                    <div class="categories-grid">
+                        @if (Model.CategoriesToDisplay?.Any() == true)
+                        {
+                            foreach (var category in Model.CategoriesToDisplay)
+                            {
+                                if (category.ContentType.Alias == "HandbookCategoryCard")
+                                {
+                                    var typedCategory = category as Umbraco.Cms.Web.Common.PublishedModels.HandbookCategoryCard;
+                                    @await Html.PartialAsync("~/Views/Partials/Shared/_CategoryCard.cshtml", typedCategory)
+                                }
+                            }
+                        }
+                        else
+                        {
+                            <div class="empty-state">
+                                <div class="empty-state__content">
+                                    <i data-lucide="folders"></i>
+                                    <h3 class="empty-state__title neumo-heading-bold">No Categories Available</h3>
+                                    <p class="empty-state__description neumo-body">
+                                        Categories will appear here as they are added.
+                                    </p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Support Tab Content -->
+    <div id="content-support" class="tab-content">
+        @await Html.PartialAsync("~/Views/Partials/Shared/_FAQSupportContent.cshtml")
+    </div>
+
+</div>
+
+<!-- Tab switching JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Listen for tab change events from sidebar navigation
+    document.addEventListener('tabChanged', function(event) {
+        const tabId = event.detail.tabId;
+        switchToTab(tabId);
+    });
+    
+    // Handle hash navigation (when arriving via links like /#handbook)
+    function initializeFromHash() {
+        const hash = window.location.hash.substring(1); // Remove the #
+        if (hash && ['welcome', 'guide', 'handbook', 'support'].includes(hash)) {
+            switchToTab(hash);
+            localStorage.setItem('activeTab', hash);
+            
+            // Update sidebar navigation state
+            const navItems = document.querySelectorAll('[data-tab]');
+            navItems.forEach(nav => {
+                nav.classList.remove('sidebar-nav__button--active');
+                if (nav.getAttribute('data-tab') === hash) {
+                    nav.classList.add('sidebar-nav__button--active');
+                }
+            });
+        } else {
+            // Initialize with saved tab or default to welcome
+            const savedTab = localStorage.getItem('activeTab') || 'welcome';
+            switchToTab(savedTab);
+        }
+    }
+    
+    // Initialize on page load
+    initializeFromHash();
+    
+    // Handle browser back/forward navigation
+    window.addEventListener('hashchange', initializeFromHash);
+});
+
+function switchToTab(tabId) {
+    // Hide all tab content
+    const allTabContent = document.querySelectorAll('.tab-content');
+    allTabContent.forEach(content => {
+        content.classList.remove('tab-content--active');
+    });
+    
+    // Show the selected tab content
+    const targetContent = document.getElementById(`content-${tabId}`);
+    if (targetContent) {
+        targetContent.classList.add('tab-content--active');
+    }
+    
+    // Update URL hash without triggering navigation
+    if (window.location.hash !== `#${tabId}`) {
+        history.replaceState(null, null, `#${tabId}`);
+    }
+}
+</script>

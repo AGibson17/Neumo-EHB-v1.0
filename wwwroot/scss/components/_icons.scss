@@ -1,0 +1,87 @@
+/* ───── LUCIDE ICON UTILITIES ───── */
+
+/* Base icon styling */
+.icon {
+    width: 1rem;
+    height: 1rem;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* Icon sizes */
+.icon-xs { width: 0.75rem; height: 0.75rem; }
+.icon-sm { width: 1rem; height: 1rem; }
+.icon-md { width: 1.25rem; height: 1.25rem; }
+.icon-lg { width: 1.5rem; height: 1.5rem; }
+.icon-xl { width: 2rem; height: 2rem; }
+
+/* Icon colors matching Neumo theme */
+.icon-brand-navy { color: var(--brand-navy); }
+.icon-brand-purple { color: var(--brand-purple); }
+.icon-brand-lilac { color: var(--brand-lilac); }
+.icon-brand-white { color: var(--brand-white); }
+.icon-brand-sunflower { color: var(--brand-sunflower); }
+
+.icon-text { color: var(--text); }
+.icon-text-muted { color: var(--text-muted); }
+.icon-sidebar { color: var(--sidebar-foreground); }
+.icon-muted { color: var(--icon-muted); }
+
+/* Common Lucide icons as classes for easy use */
+.icon-chevron-down:before { content: "\e900"; }
+.icon-check:before { content: "\e901"; }
+.icon-home:before { content: "\e902"; }
+.icon-book:before { content: "\e903"; }
+.icon-user:before { content: "\e904"; }
+.icon-settings:before { content: "\e905"; }
+.icon-search:before { content: "\e906"; }
+.icon-menu:before { content: "\e907"; }
+.icon-x:before { content: "\e908"; }
+.icon-plus:before { content: "\e909"; }
+.icon-minus:before { content: "\e90a"; }
+.icon-edit:before { content: "\e90b"; }
+.icon-trash:before { content: "\e90c"; }
+.icon-external-link:before { content: "\e90d"; }
+.icon-file:before { content: "\e90e"; }
+.icon-folder:before { content: "\e90f"; }
+
+/* Utility classes for icons in components */
+.has-icon {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    transition: all 150ms ease;
+    cursor: pointer;
+    
+    &:hover {
+        background-color: var(--button-hover);
+        color: var(--button-foreground);
+    }
+}
+
+/* Icon states */
+.icon-active {
+    color: var(--brand-purple);
+}
+
+.icon-inactive {
+    color: var(--icon-muted);
+    opacity: 0.5;
+}
+
+.icon-hover:hover {
+    color: var(--brand-purple);
+    transform: scale(1.1);
+    transition: all 150ms ease;
+}

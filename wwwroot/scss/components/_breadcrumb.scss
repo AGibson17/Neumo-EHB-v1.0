@@ -1,0 +1,106 @@
+// ───── NEUMO BREADCRUMB COMPONENT ─────
+// Navigation breadcrumb patterns
+//
+// 🚫 NEVER USE: class="flex items-center gap-2 text-sm text-gray-600"
+// ✅ ALWAYS USE: class="navigation-breadcrumb"
+//
+// Semantic breadcrumb structure following BEM methodology.
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+    padding: 0.5rem 0;
+    margin-bottom: 0.75rem;
+    
+    &__back-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+        padding: 0.375rem 0.5rem;
+        background-color: var(--brand-white);
+        color: var(--brand-navy);
+        border: 1px solid var(--brand-purple);
+        border-radius: var(--radius);
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 150ms ease;
+        cursor: pointer;
+        
+        &:hover {
+            background-color: var(--brand-purple);
+            color: var(--brand-white);
+            transform: translateX(-2px);
+        }
+        
+        &__icon {
+            width: 1rem;
+            height: 1rem;
+        }
+    }
+    
+    &__list {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+        word-break: break-words;
+        
+        @media (min-width: 640px) {
+            gap: 0.75rem;
+        }
+    }
+    
+    &__item {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        
+        &:not(:last-child) {
+            padding: 0.25rem 0.75rem;
+            background-color: var(--brand-white);
+            border-radius: var(--radius);
+            border: 1px solid var(--brand-purple);
+        }
+        
+        &--current {
+            padding: 0.25rem 0.75rem;
+            background-color: var(--brand-purple);
+            color: var(--brand-white);
+            border-radius: var(--radius);
+            font-weight: 600;
+        }
+    }
+    
+    &__link {
+        color: var(--brand-navy);
+        text-decoration: none;
+        transition: color 150ms ease;
+        cursor: pointer;
+        font-weight: 500;
+        
+        &:hover {
+            color: var(--brand-purple);
+        }
+    }
+    
+    &__separator {
+        width: 1rem;
+        height: 1rem;
+        color: var(--brand-purple);
+        opacity: 0.7;
+    }
+    
+    &__current {
+        font-weight: 600;
+        color: inherit;
+    }
+}
+
+// Navigation-specific styles
+.navigation-breadcrumb {
+    @extend .breadcrumb;
+}

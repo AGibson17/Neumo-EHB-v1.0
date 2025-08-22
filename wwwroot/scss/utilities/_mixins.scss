@@ -1,0 +1,46 @@
+/* ───── NEUMO BRAND MIXINS ───── */
+
+// Neumo gradient background (matching Tailwind config backgroundImage)
+@mixin neumo-primary-gradient {
+    background: var(--neumo-primary-gradient);
+}
+
+// Neumo container (matching Tailwind config container)
+@mixin neumo-container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+// Neumo font families
+@mixin neumo-heading-font {
+    font-family: var(--font-neumo-heading);
+}
+
+@mixin neumo-body-font {
+    font-family: var(--font-neumo-body);
+}
+
+// Neumo brand color mixins
+@mixin brand-colors($property: 'color') {
+    &.navy { #{$property}: var(--brand-navy); }
+    &.purple { #{$property}: var(--brand-purple); }
+    &.lilac { #{$property}: var(--brand-lilac); }
+    &.white { #{$property}: var(--brand-white); }
+    &.sunflower { #{$property}: var(--brand-sunflower); }
+}
+
+// Surface color mixins
+@mixin surface-colors($property: 'background-color') {
+    &.card { #{$property}: var(--card); }
+    &.card-primary { #{$property}: var(--card-primary); }
+    &.card-secondary { #{$property}: var(--card-secondary); }
+    &.card-accent { #{$property}: var(--card-accent); }
+    &.sidebar { #{$property}: var(--sidebar); }
+    &.main { #{$property}: var(--main); }
+    &.button { #{$property}: var(--button); }
+    &.pill { #{$property}: var(--pill); }
+    &.badge { #{$property}: var(--badge); }
+}

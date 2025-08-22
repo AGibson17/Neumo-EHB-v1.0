@@ -1,0 +1,94 @@
+@using Microsoft.AspNetCore.Mvc.Razor
+@{
+    Layout = null;
+}
+@*
+   Welcome Content component converted from React/TSX to Razor
+   Matches the WelcomeContent.tsx component exactly
+   Features: Hero section, mission, values, and quick stats
+*@
+
+<div class="welcome-card">
+     <!-- Simplified Hero Section -->
+     <div class="hero-banner">
+         <div class="hero-text">
+             <div class="hero-title">
+                 <i data-lucide="sparkles" class="icon icon-xl"></i>
+                 <h1 class="neumo-heading-bold">Welcome to Neumo!</h1>
+             </div>
+             <p class="hero-intro">
+                 Welcome to the team! Whether you are just starting out or have been with us for years, we're so excited to have you as a part of our team.
+             </p>
+             <p class="hero-description">
+                 You are the foundation of our success. It is through your talent, commitment, and collaboration that we deliver the services our customers depend on and create new opportunities for growth and innovation. We look forward to building the future of Neumo together and wish you every success in your role.
+             </p>
+         </div>
+         <div class="hero-mascot">
+             <img 
+                 src="~/images/neumo-mascot-navy-downDog-reflect.svg" 
+                 alt="Neumo mascot" 
+                 class="mascot-image"
+             />
+         </div>
+     </div>
+    <div class="welcome-card__inner">
+        <div class="space-y-lg-welcome">
+
+            <!-- Mission and Values -->
+            <div class="space-y-lg-welcome">
+                <div class="mission-card">
+                    <h2 class="neumo-h2">Our Mission</h2>
+                    <p class="neumo-body">
+                        Deliver exceptional quality, unparalleled service, and a customer-focused experience that fosters trust and integrity. We strive to exceed expectations and build lasting partnerships that drive success for our customers and the communities we serve.
+                    </p>
+                </div>
+
+                <div class="values-card">
+                    <h2 class="neumo-h2">Our Core Values</h2>
+                    <p class="neumo-body">
+                        At Neumo, our core values guide our decisions, shape our culture, and define how we interact with our clients, partners, and each other.
+                    </p>
+                    
+                    <div class="values-card__grid">
+                        <div class="values-card__item">
+                            <h3 class="neumo-subhead">Trust</h3>
+                            <p class="neumo-body">
+                                We genuinely care for those around us, are respectful, and lead by example. We share what we know to make those around us better.
+                            </p>
+                        </div>
+                        
+                        <div class="values-card__item">
+                            <h3 class="neumo-subhead">Client-Focused</h3>
+                            <p class="neumo-body">
+                                Our customers, partners, and you are our priority. We provide meaningful expertise by actively listening and delivering on our commitments.
+                            </p>
+                        </div>
+                        
+                        <div class="values-card__item">
+                            <h3 class="neumo-subhead">Integrity</h3>
+                            <p class="neumo-body">
+                                We uphold the values and principles of the Company in every action and decision, doing the right thing for our customers, partners, and you.
+                            </p>
+                        </div>
+                        
+                        <div class="values-card__item">
+                            <h3 class="neumo-subhead">Responsive</h3>
+                            <p class="neumo-body">
+                                We act with a sense of urgency for our customers, partners, and you, always engaged and ready to perform.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Initialize Lucide icons for this component
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    });
+</script>
