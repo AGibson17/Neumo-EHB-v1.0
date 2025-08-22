@@ -1,0 +1,57 @@
+﻿/* ==========================================================================
+   Alert Component Styles
+   ========================================================================= */
+
+.alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem;
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    background-color: var(--color-bg-alert);
+    color: var(--color-text-body);
+}
+
+.alert-icon {
+    flex-shrink: 0;
+    font-size: 1.25rem;
+    color: var(--color-icon-body);
+}
+
+.alert-title {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.alert-content {
+    flex: 1;
+}
+
+/* Alert Variants */
+.alert-success {
+    background-color: var(--color-success-50);
+    border-color: var(--color-success-300);
+    color: var(--color-success-800);
+}
+
+.alert-warning {
+    background-color: var(--color-warn-50);
+    border-color: var(--color-warn-300);
+    color: var(--color-warn-800);
+}
+
+.alert-danger {
+    background-color: var(--color-error-50);
+    border-color: var(--color-error-300);
+    color: var(--color-error-800);
+}
+
+.alert-info {
+    background-color: var(--color-info-50);
+    border-color: var(--color-info-300);
+    color: var(--color-info-800);
+}

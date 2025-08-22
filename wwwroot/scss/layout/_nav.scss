@@ -1,0 +1,51 @@
+﻿/* ==========================================================================
+   Sidebar Navigation Content Styles
+   ========================================================================= */
+
+.category-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    font-family: var(--font-body);
+    background-color: transparent;
+    color: var(--color-text-sidebar);
+}
+
+.category-nav-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.category-nav-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+    margin-bottom: 0.25rem;
+}
+
+.category-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    color: var(--color-text-sidebar);
+    transition: background-color 0.2s ease, color 0.2s ease;
+
+    &:hover {
+        background-color: var(--color-bg-sidebar-hover);
+        color: var(--color-accent-orange);
+    }
+
+    &.active {
+        background-color: var(--color-bg-sidebar-active);
+        font-weight: 600;
+        color: var(--color-accent-orange);
+    }
+}

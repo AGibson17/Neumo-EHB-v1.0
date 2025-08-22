@@ -1,0 +1,237 @@
+// ───── NEUMO CARD COMPONENTS ─────
+// Card patterns used throughout the application
+//
+// 🚫 NEVER USE: class="bg-white p-6 rounded-lg shadow border"
+// ✅ ALWAYS USE: class="card"
+//
+// These components replace Tailwind utility combinations with 
+// semantic, maintainable, and brand-compliant classes.
+
+// Base card
+.card {
+    background-color: var(--card);
+    color: var(--card-foreground);
+    border: 2px solid var(--brand-purple);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    border-radius: 0.75rem; // rounded-xl
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); // shadow-sm
+    
+    &--primary {
+        background-color: var(--card-primary);
+        color: var(--brand-white);
+        border-color: var(--card-primary);
+    }
+    
+    &--secondary {
+        background-color: var(--card-secondary);
+        color: var(--card-foreground);
+        border-color: var(--card-border);
+    }
+}
+
+// Card sections
+.card__header {
+    padding: 1.5rem 1.5rem 0 1.5rem;
+}
+
+.card__content {
+    padding: 1.5rem;
+}
+
+.card__footer {
+    padding: 0 1.5rem 1.5rem 1.5rem;
+}
+
+// Welcome card (hero section)
+.welcome-card {
+    @extend .card;
+    padding: 2rem;
+    max-width: 80rem; // max-w-5xl
+    margin-left: auto;
+    margin-right: auto;
+    
+    &__inner {
+        > * + * {
+            margin-top: 2rem; // space-y-8
+        }
+    }
+}
+
+// Hero banner inside welcome card
+.hero-banner {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.75rem; // rounded-xl
+    border: 2px solid var(--brand-navy);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); // shadow-md
+    background: var(--brand-purple);
+    color: var(--brand-white);
+    padding: 2rem;
+    width: 100%;
+    
+    &__content {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+    
+    &__mascot {
+        display: none;
+        flex-shrink: 0;
+        margin-right: 2rem;
+        
+        @media (min-width: 1024px) {
+            display: flex;
+        }
+        
+        img {
+            width: 8rem;
+            height: 8rem;
+            opacity: 0.9;
+            transition: opacity 300ms ease;
+            
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+    
+    &__text {
+        flex: 1;
+        text-align: center;
+        
+        > * + * {
+            margin-top: 1.5rem; // space-y-6
+        }
+        
+        @media (min-width: 1024px) {
+            padding-right: 10rem; // lg:pr-40
+        }
+    }
+    
+    &__title-section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+    }
+}
+
+
+.values-card {
+    @extend .card;
+    border-color: hsl(var(--primary) / 0.3);
+    padding: 1.5rem;
+    
+    &__grid {
+        display: grid;
+        gap: 1.5rem;
+        
+        @media (min-width: 768px) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+    
+    &__item {
+        @extend .card;
+        padding: 1rem;
+    }
+}
+
+// Policy card component
+.policy-card {
+    @extend .card;
+    padding: 1.5rem;
+    transition: box-shadow 150ms ease;
+    cursor: pointer;
+    
+    &:hover {
+        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); // shadow-lg
+    }
+    
+    &__header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+    }
+    
+    &__title {
+        flex: 1;
+        margin-right: 1rem;
+    }
+    
+    &__badge {
+        flex-shrink: 0;
+    }
+    
+    &__summary {
+        margin-bottom: 1rem;
+        line-height: 1.625; // leading-relaxed
+    }
+    
+    &__footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 1rem;
+        border-top: 1px solid var(--card-border);
+    }
+    
+    &__tags {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+    
+    &__action {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--primary);
+        font-weight: 500;
+        
+        &:hover {
+            color: var(--primary-hover);
+        }
+    }
+}
+
+// Example/demo cards
+.demo-card {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    color: var(--card-foreground);
+    
+    &--brand-navy {
+        background-color: var(--brand-navy);
+        color: var(--brand-white);
+    }
+    
+    &--brand-purple {
+        background-color: var(--brand-purple);
+        color: var(--brand-white);
+    }
+    
+    &--brand-lilac {
+        background-color: var(--brand-lilac);
+        color: var(--brand-navy);
+    }
+    
+    &--brand-white {
+        background-color: var(--brand-white);
+        color: var(--brand-navy);
+        border: 1px solid var(--brand-lilac);
+    }
+    
+    &--brand-sunflower {
+        background-color: var(--brand-sunflower);
+        color: var(--brand-navy);
+    }
+    
+    &--gradient {
+        background: var(--neumo-primary-gradient);
+        color: var(--brand-white);
+    }
+}

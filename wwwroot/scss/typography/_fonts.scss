@@ -1,0 +1,12 @@
+﻿:root {
+    // Neumo Font Families - Brand Standards
+    // Primary Type: DM Sans for H1 headings (light weight, airy, sophisticated)
+    --font-neumo-heading: "DM Sans", sans-serif;
+    // Secondary Type: Schibsted Grotesk for H2, body copy, eyebrows, subheads
+    --font-neumo-body: "Schibsted Grotesk", sans-serif;
+    
+    // Legacy compatibility
+    --font-sans: var(--font-neumo-body);
+    --font-serif: var(--font-neumo-heading);
+    --font-mono: "Schibsted Grotesk", monospace;
+}

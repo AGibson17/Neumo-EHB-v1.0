@@ -1,0 +1,341 @@
+@{
+    Layout = null;
+}
+
+@*
+   Work S                <div class="flex-container--gap-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 256 256" class="icon-sm">
+                        <path d="M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,200.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z"></path>
+                    </svg>
+                    <span class="state-selector-text">Select work state</span>
+                    <span class="state-selector-mobile-text" style="display: none;">Select State</span>
+                </div>elector component matching WorkStateSelector TSX component
+   Features: dropdown for selecting US work state with filter-as-you-type functionality
+*@
+
+<div class="work-state-selector" id="workStateSelector" style="position: relative;">
+    <!-- Selected state display (hidden by default) -->
+    <div class="selected-state-display" id="selectedStateDisplay" style="display: none;">
+        <svg class="icon-sm text-muted-foreground" fill="currentColor" viewBox="0 0 256 256">
+            <path d="M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,200.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z"></path>
+        </svg>
+        <span class="text-primary-foreground">
+            <span class="state-label">Currently Selected Work State:</span> 
+            <strong class="text-muted" id="selectedStateName"></strong>
+            <strong class="text-muted state-code-mobile" id="selectedStateCode" style="display: none;"></strong>
+        </span>
+        <button 
+            type="button"
+            onclick="changeWorkState()"
+            class="btn-link"
+        >
+            Change
+        </button>
+    </div>
+
+    <!-- State selector dropdown -->
+    <div class="state-selector-dropdown" id="stateSelectorDropdown" style="position: relative;">
+        <div class="popover-container" style="position: relative;">
+            <button
+                type="button"
+                id="stateSelectorTrigger"
+                onclick="toggleStateSelector()"
+                class="state-selector-btn"
+                aria-expanded="false"
+                role="combobox"
+                aria-haspopup="dialog"
+                data-state="closed"
+            >
+                <div class="flex-container--gap-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 256 256">
+                        <path d="M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,200.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z"></path>
+                    </svg>
+                    <span>Select work state</span>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 256 256" class="chevron-icon">
+                    <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path>
+                </svg>
+            </button>
+
+            <!-- Dropdown content -->
+            <div 
+                id="stateDropdownContent"
+                class="popover-content"
+                style="display: none; width: 100%; margin-top: 0.25rem; background-color: #ffffff; border: 1px solid var(--brand-lilac); border-radius: var(--radius); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); z-index: 50; position: absolute; top: 100%; left: 0;"
+            >
+                <div class="states-list" style="max-height: 200px !important; overflow-y: auto !important; padding: 0.5rem !important; background-color: #ffffff !important;">
+                    <div id="noStatesFound" class="no-states-message" style="display: none;">
+                        No states found.
+                    </div>
+                    <div id="statesList">
+                        <!-- States will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.work-state-selector .state-item:hover {
+    background-color: var(--brand-sunflower) !important;
+    color: var(--brand-navy) !important;
+    cursor: pointer !important;
+}
+
+.work-state-selector .state-item {
+    padding: 0.75rem 1rem !important;
+    margin-bottom: 0.25rem !important;
+    border-radius: 4px !important;
+    transition: all 0.15s ease-in-out !important;
+    cursor: pointer !important;
+}
+
+.popover-container {
+    position: relative !important;
+}
+
+.state-selector-dropdown {
+    position: relative !important;
+}
+
+#stateDropdownContent {
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    width: 100% !important;
+    z-index: 1000 !important;
+}
+</style>
+
+<script>
+// US States array with state codes for mapping to policy overlays
+const US_STATES = [
+    { name: 'Alabama', code: 'al' },
+    { name: 'Alaska', code: 'ak' },
+    { name: 'Arizona', code: 'az' },
+    { name: 'Arkansas', code: 'ar' },
+    { name: 'California', code: 'ca' },
+    { name: 'Colorado', code: 'co' },
+    { name: 'Connecticut', code: 'ct' },
+    { name: 'Delaware', code: 'de' },
+    { name: 'Florida', code: 'fl' },
+    { name: 'Georgia', code: 'ga' },
+    { name: 'Hawaii', code: 'hi' },
+    { name: 'Idaho', code: 'id' },
+    { name: 'Illinois', code: 'il' },
+    { name: 'Indiana', code: 'in' },
+    { name: 'Iowa', code: 'ia' },
+    { name: 'Kansas', code: 'ks' },
+    { name: 'Kentucky', code: 'ky' },
+    { name: 'Louisiana', code: 'la' },
+    { name: 'Maine', code: 'me' },
+    { name: 'Maryland', code: 'md' },
+    { name: 'Massachusetts', code: 'ma' },
+    { name: 'Michigan', code: 'mi' },
+    { name: 'Minnesota', code: 'mn' },
+    { name: 'Mississippi', code: 'ms' },
+    { name: 'Missouri', code: 'mo' },
+    { name: 'Montana', code: 'mt' },
+    { name: 'Nebraska', code: 'ne' },
+    { name: 'Nevada', code: 'nv' },
+    { name: 'New Hampshire', code: 'nh' },
+    { name: 'New Jersey', code: 'nj' },
+    { name: 'New Mexico', code: 'nm' },
+    { name: 'New York', code: 'ny' },
+    { name: 'North Carolina', code: 'nc' },
+    { name: 'North Dakota', code: 'nd' },
+    { name: 'Ohio', code: 'oh' },
+    { name: 'Oklahoma', code: 'ok' },
+    { name: 'Oregon', code: 'or' },
+    { name: 'Pennsylvania', code: 'pa' },
+    { name: 'Rhode Island', code: 'ri' },
+    { name: 'South Carolina', code: 'sc' },
+    { name: 'South Dakota', code: 'sd' },
+    { name: 'Tennessee', code: 'tn' },
+    { name: 'Texas', code: 'tx' },
+    { name: 'Utah', code: 'ut' },
+    { name: 'Vermont', code: 'vt' },
+    { name: 'Virginia', code: 'va' },
+    { name: 'Washington', code: 'wa' },
+    { name: 'West Virginia', code: 'wv' },
+    { name: 'Wisconsin', code: 'wi' },
+    { name: 'Wyoming', code: 'wy' }
+];
+
+let currentWorkState = null;
+let currentWorkStateCode = null;
+let isDropdownOpen = false;
+
+// Initialize the component
+document.addEventListener('DOMContentLoaded', function() {
+    initializeWorkStateSelector();
+    updateStateSpecificIndicators();
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+        const selector = document.getElementById('workStateSelector');
+        if (!selector.contains(event.target) && isDropdownOpen) {
+            closeStateSelector();
+        }
+    });
+});
+
+function initializeWorkStateSelector() {
+    // Load saved work state from localStorage
+    const saved = localStorage.getItem('workState');
+    const savedCode = localStorage.getItem('workStateCode');
+    
+    if (saved && savedCode) {
+        currentWorkState = saved;
+        currentWorkStateCode = savedCode;
+        showSelectedState();
+    } else {
+        showStateSelector();
+    }
+    
+    populateStatesList();
+}
+
+function populateStatesList() {
+    const statesList = document.getElementById('statesList');
+    statesList.innerHTML = '';
+    
+    US_STATES.forEach(state => {
+        const item = document.createElement('div');
+        item.className = 'state-item';
+        item.onclick = () => selectState(state.name, state.code);
+        item.textContent = state.name;
+        
+        statesList.appendChild(item);
+    });
+}
+
+function selectState(stateName, stateCode) {
+    currentWorkState = stateName;
+    currentWorkStateCode = stateCode;
+    localStorage.setItem('workState', stateName);
+    localStorage.setItem('workStateCode', stateCode);
+    closeStateSelector();
+    showSelectedState();
+    updateStateSpecificIndicators();
+}
+
+function changeWorkState() {
+    currentWorkState = null;
+    currentWorkStateCode = null;
+    localStorage.removeItem('workState');
+    localStorage.removeItem('workStateCode');
+    showStateSelector();
+    updateStateSpecificIndicators();
+    toggleStateSelector();
+}
+
+function showSelectedState() {
+    document.getElementById('selectedStateDisplay').style.display = 'flex';
+    document.getElementById('stateSelectorDropdown').style.display = 'none';
+    document.getElementById('selectedStateName').textContent = currentWorkState;
+    document.getElementById('selectedStateCode').textContent = currentWorkStateCode ? currentWorkStateCode.toUpperCase() : '';
+}
+
+function showStateSelector() {
+    document.getElementById('selectedStateDisplay').style.display = 'none';
+    document.getElementById('stateSelectorDropdown').style.display = 'block';
+}
+
+function toggleStateSelector() {
+    const dropdown = document.getElementById('stateDropdownContent');
+    const trigger = document.getElementById('stateSelectorTrigger');
+    
+    if (isDropdownOpen) {
+        closeStateSelector();
+    } else {
+        dropdown.style.display = 'block';
+        dropdown.style.position = 'absolute';
+        dropdown.style.top = '100%';
+        dropdown.style.left = '0';
+        dropdown.style.zIndex = '1000';
+        trigger.setAttribute('aria-expanded', 'true');
+        isDropdownOpen = true;
+    }
+}
+
+function closeStateSelector() {
+    const dropdown = document.getElementById('stateDropdownContent');
+    const trigger = document.getElementById('stateSelectorTrigger');
+    
+    dropdown.style.display = 'none';
+    trigger.setAttribute('aria-expanded', 'false');
+    isDropdownOpen = false;
+}
+
+
+function updateStateSpecificIndicators() {
+    // Update state-specific indicators based on selected work state
+    const policyCards = document.querySelectorAll('.policy-accordion');
+    
+    policyCards.forEach(card => {
+        const stateIndicator = card.querySelector('.badge-warning');
+        const statePolicyButtons = card.querySelectorAll('.policy-accordion__state-btn');
+        const statePoliciesSection = card.querySelector('.policy-accordion__state-policies');
+        
+        if (!currentWorkState) {
+            // Hide state-specific indicators when no state is selected
+            if (stateIndicator) stateIndicator.style.display = 'none';
+            if (statePoliciesSection) statePoliciesSection.style.display = 'none';
+            statePolicyButtons.forEach(btn => {
+                btn.style.display = 'none';
+            });
+            return;
+        }
+        
+        // Check if this policy card has state overlays for the current work state
+        const cardStateNames = card.getAttribute('data-state-names');
+        const hasStateOverlay = cardStateNames && cardStateNames.split(',').some(name => 
+            name.trim().toLowerCase() === currentWorkState.toLowerCase()
+        );
+        
+        // Show/hide state-specific indicator
+        if (stateIndicator) {
+            stateIndicator.style.display = hasStateOverlay ? 'flex' : 'none';
+        }
+        
+        // Show/hide state policy buttons based on current work state
+        let hasVisibleStateButtons = false;
+        statePolicyButtons.forEach(btn => {
+            const buttonStateName = btn.getAttribute('data-state-name');
+            const buttonHasState = buttonStateName && 
+                buttonStateName.trim().toLowerCase() === currentWorkState.toLowerCase();
+            
+            if (buttonHasState) {
+                btn.style.display = 'flex';
+                hasVisibleStateButtons = true;
+            } else {
+                btn.style.display = 'none';
+            }
+        });
+        
+        // Show/hide entire state policies section
+        if (statePoliciesSection) {
+            statePoliciesSection.style.display = hasVisibleStateButtons ? 'block' : 'none';
+        }
+    });
+}
+
+function hasStateOverlayForState(policyElement, stateName) {
+    // Check if policy has state overlay for the specified state name using data attributes
+    const cardStateNames = policyElement.getAttribute('data-state-names');
+    return cardStateNames && cardStateNames.split(',').some(name => 
+        name.trim().toLowerCase() === stateName.toLowerCase()
+    );
+}
+
+// Global function for external access
+window.getSelectedWorkState = function() {
+    return {
+        name: currentWorkState,
+        code: currentWorkStateCode
+    };
+};
+</script>
+

@@ -1,0 +1,173 @@
+/* ───── LAYOUT UTILITY CLASSES ───── */
+
+/* Layout containers */
+.layout-container {
+    min-height: 100vh;
+    background-color: var(--background);
+}
+
+.layout-header {
+    border-bottom: 2px solid var(--brand-purple);
+    background: linear-gradient(135deg, #AEA7F4 0%, var(--brand-purple) 100%);
+    backdrop-filter: blur(4px);
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+}
+
+.layout-main {
+    display: flex;
+    height: calc(100vh - 73px); /* Account for header height */
+}
+
+.layout-sidebar {
+    width: 18rem; /* 72 in Tailwind */
+    flex-shrink: 0;
+    border-right: 2px solid var(--brand-purple);
+    background-color: white;
+    height: 100%;
+    overflow: hidden;
+}
+
+.layout-content {
+    flex: 1 1 0%;
+    background-color: var(--brand-white);
+    overflow-y: auto;
+    max-height: 100%;
+    
+    /* Custom scrollbar styling */
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+    
+    &::-webkit-scrollbar-track {
+        background: var(--background);
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        background-color: var(--muted);
+        border-radius: 4px;
+        
+        &:hover {
+            background-color: var(--muted-foreground);
+        }
+    }
+}
+
+.layout-content-container {
+    max-width: 80rem; /* container mx-auto equivalent */
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    min-height: 100%;
+    box-sizing: border-box;
+
+    @media (max-width: 768px) {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        padding-top: 1rem;
+        max-width: 100%;
+    }
+
+    @media (max-width: 480px) {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+        padding-top: 0.75rem;
+    }
+}
+
+/* Header specific */
+.header-container {
+    max-width: 110rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.header-brand {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.header-mascot {
+    height: 2.5rem;
+    width: auto;
+    flex-shrink: 0;
+}
+
+.header-brand-image {
+    height: 2rem;
+    width: auto;
+}
+
+.header-brand-divider {
+    border-left: 3px solid var(--brand-navy);
+    padding-left: 1rem;
+}
+
+.header-title {
+    font-family: var(--font-neumo-heading); /* DM Sans - Primary Type */
+    font-weight: 600; /* Light weight for airy, sophisticated feel */
+    font-size: 1.25rem;
+    color: var(--brand-navy);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Responsive utilities */
+@media (max-width: 768px) {
+    .layout-sidebar {
+        display: none;
+    }
+    
+    .layout-main {
+        height: calc(100vh - 60px); /* Smaller header on mobile */
+    }
+    
+    .layout-content-container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .header-content {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .header-brand {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .header-title {
+        font-size: 1rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .header-actions {
+        flex-shrink: 0;
+    }
+}

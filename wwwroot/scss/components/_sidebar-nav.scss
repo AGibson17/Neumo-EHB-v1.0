@@ -1,0 +1,86 @@
+/* ───── SIDEBAR NAVIGATION COMPONENT ───── */
+
+.sidebar-nav {
+    background-color: white;
+    border-right: 1px solid var(--border);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    &__container {
+        padding: 1.5rem;
+        flex: 1 1 0%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__header {
+        margin-bottom: 1.5rem;
+    }
+
+    &__title {
+        font-family: var(--font-neumo-body);
+        font-weight: 500;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        font-size: 0.875rem;
+        color: var(--brand-navy);
+        margin-bottom: 0.75rem;
+    }
+
+    &__items {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    &__button {
+        width: 100%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 0.75rem;
+        height: auto;
+        padding: 1rem;
+        font-size: 1rem;
+        font-family: var(--font-neumo-body);
+        font-weight: 400;
+        border-radius: 0.375rem;
+        border: 1px solid transparent;
+        background-color: transparent;
+        color: var(--brand-navy);
+        text-decoration: none;
+        transition: all 0.2s ease-in-out;
+        cursor: pointer;
+        
+        &:hover {
+            background-color: var(--brand-lilac);
+            color: var(--brand-navy);
+        }
+
+        &:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--ring);
+        }
+
+        &:disabled {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        &--active {
+            background-color: var(--brand-purple);
+            color: var(--brand-white);
+        }
+
+        &__icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        &__text {
+            text-align: left;
+        }
+    }
+}

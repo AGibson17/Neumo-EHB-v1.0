@@ -1,0 +1,260 @@
+﻿@inherits UmbracoViewPage<Umbraco.Cms.Web.Common.PublishedModels.HandbookCategoryCard>
+@{
+    Layout = "~/Views/Layouts/_Layout.cshtml";
+}
+
+<div class="category-page">
+    <!-- Category Header -->
+    <div class="category-page__header">
+        <div class="content-width">
+            <!-- Breadcrumb Navigation -->
+            <nav class="navigation-breadcrumb" aria-label="breadcrumb">
+                <a href="@Model.Parent.Url()#handbook" 
+                   class="breadcrumb__back-button"
+                   onclick="handleBreadcrumbNavigation(event, this)">
+                    <i data-lucide="arrow-left" class="breadcrumb__back-button__icon"></i>
+                    <span>Back to Handbook</span>
+                </a>
+            </nav>
+            
+            <!-- Category Title & Description -->
+            <div class="category-page__title-section">
+                <div class="flex-container--between flex-container--gap">
+                    <div class="category-page__content">
+                        <h1 class="category-page__title neumo-heading-bold">
+                            @Model.CategoryTitle
+                        </h1>
+                        <p class="category-page__description neumo-body">
+                            @Model.CategoryDescription
+                        </p>
+                    </div>
+                    <div class="category-page__icon">
+                        <div class="category-icon-wrapper">
+                            <i data-lucide="folder-open"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Quick Links to Other Categories -->
+    <div class="category-page__quick-links">
+        <div class="content-width">
+            <div class="quick-links-section">
+                <div class="quick-links-section__header">
+                    <h3 class="quick-links-section__title neumo-heading-bold">
+                        <i data-lucide="external-link"></i>
+                        Other Categories
+                    </h3>
+                    @{
+                        // Get all categories from the parent homepage
+                        var homepage = Model.AncestorOrSelf("HandbookHomePage") as Umbraco.Cms.Web.Common.PublishedModels.HandbookHomePage;
+                        var otherCategories = homepage?.CategoriesToDisplay?.Where(cat => 
+                            cat.ContentType.Alias == "HandbookCategoryCard" && cat.Id != Model.Id) ?? Enumerable.Empty<IPublishedContent>();
+                        var categoryCount = otherCategories.Count();
+                    }
+                    @if (categoryCount > 0)
+                    {
+                        <span class="badge badge-primary">
+                            @categoryCount @(categoryCount == 1 ? "Category" : "Categories")
+                        </span>
+                    }
+                </div>
+                
+                @if (otherCategories.Any())
+                {
+                    <div class="quick-links-buttons-grid">
+                        @foreach (var category in otherCategories)
+                        {
+                            var typedCategory = category as Umbraco.Cms.Web.Common.PublishedModels.HandbookCategoryCard;
+                            if (typedCategory != null)
+                            {
+                                var categoryPolicyCount = typedCategory.Children?.Where(c => c.ContentType.Alias == "policyCard")?.Count() ?? 0;
+                                
+                                <a href="@typedCategory.Url()" class="quick-link-button" data-category-transition>
+                                    <div class="quick-link-button__content">
+                                        <div class="quick-link-button__text">
+                                            <h4 class="quick-link-button__title neumo-subhead">@typedCategory.CategoryTitle</h4>
+                                            <span class="quick-link-button__meta badge badge-secondary">
+                                                @categoryPolicyCount @(categoryPolicyCount == 1 ? "Policy" : "Policies")
+                                            </span>
+                                        </div>
+                                        <div class="quick-link-button__icon">
+                                            <i data-lucide="arrow-right"></i>
+                                        </div>
+                                    </div>
+                                </a>
+                            }
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="quick-links-empty">
+                        <p class="neumo-body text-muted">No other categories available.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    
+    <!-- Category Content -->
+    <div class="category-page__content">
+        <div class="content-width">
+            <!-- Policy Cards Grid -->
+            <div class="policy-grid">
+                <div class="policy-grid__header">
+                    <h2 class="neumo-heading-bold">Policies in this Category</h2>
+                    <span class="badge badge-secondary">
+                        @{
+                            var policyCount = Model.Children?.Where(x => x.ContentType.Alias == "policyCard").Count() ?? 0;
+                        }
+                        @policyCount Policies
+                    </span>
+                </div>
+                
+                <div class="policy-grid__container">
+                    @if (Model.Children?.Any(x => x.ContentType.Alias == "policyCard") == true)
+                    {
+                        @foreach (var policy in Model.Children.Where(x => x.ContentType.Alias == "policyCard"))
+                        {
+                            var typedPolicy = policy as Umbraco.Cms.Web.Common.PublishedModels.PolicyCard;
+                            @await Html.PartialAsync("~/Views/Partials/UI/_PolicyCard.cshtml", typedPolicy)
+                        }
+                    }
+                    else
+                    {
+                        <div class="empty-state">
+                            <div class="empty-state__content">
+                                <i data-lucide="file-x"></i>
+                                <h3 class="empty-state__title neumo-heading-bold">No Policies Available</h3>
+                                <p class="empty-state__description neumo-body">
+                                    Policies will appear here as they are added to this category.
+                                </p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Set the active tab BEFORE DOMContentLoaded to ensure sidebar picks it up
+    localStorage.setItem('activeTab', 'handbook');
+
+    // Initialize Lucide icons for category page
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+        
+        // Set Employee Handbook nav item as active when viewing category pages
+        // Use setTimeout to ensure this runs after the sidebar's DOMContentLoaded
+        setTimeout(function() {
+            setHandbookNavActive();
+        }, 0);
+        
+        // Also update mobile menu if it exists
+        updateMobileMenuActiveState('handbook');
+        
+        // Initialize category page transitions
+        initializeCategoryTransitions();
+
+    // Ensure only one policy accordion (<details>) is open at a time
+        const policyAccordions = Array.from(document.querySelectorAll('.policy-accordion'));
+        policyAccordions.forEach((item) => {
+            item.addEventListener('toggle', () => {
+                if (item.open) {
+                    policyAccordions.forEach(other => {
+                        if (other !== item && other.open) {
+                            other.open = false;
+                        }
+                    });
+                }
+            });
+        });
+
+    // If there's a policy hash in the URL, open and scroll to it
+    handlePolicyHashDeepLink();
+    });
+    
+    function handleBreadcrumbNavigation(event, element) {
+        event.preventDefault();
+        
+        // Add fade out effect
+        document.body.classList.add('page-transitioning-out');
+        
+        setTimeout(function() {
+            // Navigate to the parent page
+            const parentUrl = element.href.split('#')[0];
+            window.location.href = parentUrl;
+            
+            // Set the active tab to handbook when the page loads
+            localStorage.setItem('activeTab', 'handbook');
+        }, 150);
+    }
+    
+    function initializeCategoryTransitions() {
+        // Add fade in effect when page loads
+        document.body.classList.add('page-fade-in');
+        
+        // Handle category navigation links with transitions
+        const categoryLinks = document.querySelectorAll('[data-category-transition]');
+        categoryLinks.forEach(link => {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+                const href = this.href;
+                
+                // Add fade out effect
+                document.body.classList.add('page-transitioning-out');
+                
+                // Navigate after transition
+                setTimeout(function() {
+                    window.location.href = href;
+                }, 150);
+            });
+        });
+    }
+    
+    function setHandbookNavActive() {
+        // Remove active class from all nav items
+        const navItems = document.querySelectorAll('.sidebar-nav__button');
+        navItems.forEach(item => {
+            item.classList.remove('sidebar-nav__button--active');
+        });
+        
+        // Add active class to handbook nav item
+        const handbookNavItem = document.querySelector('[data-tab="handbook"]');
+        if (handbookNavItem) {
+            handbookNavItem.classList.add('sidebar-nav__button--active');
+        }
+        
+        // Store the active tab
+        localStorage.setItem('activeTab', 'handbook');
+    }
+
+    function handlePolicyHashDeepLink() {
+        const hash = window.location.hash;
+        if (!hash || !hash.startsWith('#policy-')) return;
+        const id = hash.replace('#policy-', '').trim();
+        if (!id) return;
+        const target = document.getElementById(`policy-${id}`) || document.querySelector(`[data-policy-id="${id}"]`);
+        if (!target) return;
+
+        // Close others and open the target
+        const all = document.querySelectorAll('.policy-accordion');
+        all.forEach(el => {
+            el.open = (el === target);
+        });
+
+        // Smooth scroll into view and add a temporary highlight
+        setTimeout(() => {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            target.classList.add('policy-accordion--highlight');
+            setTimeout(() => target.classList.remove('policy-accordion--highlight'), 1500);
+        }, 50);
+    }
+</script>

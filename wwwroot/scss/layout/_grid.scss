@@ -1,0 +1,102 @@
+﻿/* ==========================================================================
+   Layout Grid Structure for Employee Handbook
+   Based on original Tailwind + TypeScript layout logic
+   ========================================================================= */
+
+html,
+body {
+    height: 100%;
+    overflow: hidden;
+}
+
+.site-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+.grid-layout {
+    flex: 1;
+    display: flex;
+    min-height: 0; // ⚠️ this is key
+    overflow: hidden;
+}
+
+/* Sidebar */
+.sidebar {
+    width: var(--sidebar-width, 16rem);
+    background-color: var(--color-bg-sidebar);
+    color: var(--color-text-sidebar);
+    transition: width 0.2s ease-in-out;
+    position: relative;
+    z-index: 10;
+
+    &[data-variant="floating"] {
+        border: 1px solid var(--color-border-sidebar);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-sm);
+    }
+
+    &[data-state="collapsed"] {
+        width: var(--sidebar-width-icon, 3rem);
+    }
+
+    @media (max-width: 768px) {
+        display: none;
+    }
+}
+
+/* Sidebar Mobile Sheet */
+.sidebar-mobile {
+    width: var(--sidebar-width-mobile, 18rem);
+    background-color: var(--color-bg-sidebar);
+    color: var(--color-text-sidebar);
+}
+
+/* Main content */
+.main-content {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-bg-main);
+    color: var(--color-text-body);
+    min-height: 0; /* allows for scrollable children */
+    overflow: hidden;
+
+    @media (min-width: 768px) {
+        &.inset {
+            margin: 0.5rem;
+            margin-left: 0;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-sm);
+        }
+
+        &[data-state="collapsed"].inset {
+            margin-left: 0.5rem;
+        }
+    }
+}
+
+/* Scroll container (used within main-content or cards) */
+.scroll-container {
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex: 1;
+    min-height: 0;
+    padding: 1rem;
+    /* scrollbar styles */
+    &::-webkit-scrollbar {
+        width: 0.6rem;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: var(--color-border);
+        border-radius: 9999px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+}

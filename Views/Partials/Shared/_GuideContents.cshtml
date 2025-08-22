@@ -1,0 +1,256 @@
+@inherits UmbracoViewPage
+@*
+   Getting Started component - Complete rebuild
+   Features: Essential handbook information, employment basics, and key policies
+*@
+
+<div class="getting-started-card">
+    <div class="getting-started-card__inner">
+        <!-- Header Section -->
+        <div class="getting-started-header">
+            <div class="getting-started-header__content">
+                <div class="getting-started-header__icon">
+                    <i data-lucide="rocket" class="icon icon-xl"></i>
+                </div>
+                <div class="getting-started-header__text">
+                    <h1 class="neumo-heading-bold">Getting Started</h1>
+                    <p class="neumo-body">
+                        This handbook will be a valuable reference for you as it is a summary of our policies and is subject to change at our sole discretion.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="getting-started-content">
+            <!-- Important Notice -->
+            <div class="notice-card">
+                <div class="notice-card__icon">
+                    <i data-lucide="info" class="icon icon-md"></i>
+                </div>
+                <div class="notice-card__content">
+                    <h3 class="neumo-subhead">Living Document</h3>
+                    <p class="neumo-body">
+                        Over time, our thoughts and policies will evolve! When there's a company-wide change, we'll update this handbook and review the changes with you. It's your responsibility to review it periodically to stay informed.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Key Terms -->
+            <div class="section-card">
+                <div class="section-card__header">
+                    <i data-lucide="book-open" class="icon icon-md"></i>
+                    <h2 class="neumo-h2">Key Terms</h2>
+                </div>
+                <div class="terms-grid">
+                    <div class="term-item">
+                        <h3 class="neumo-subhead">Manager</h3>
+                        <p class="neumo-body">Your direct supervisor</p>
+                    </div>
+                    <div class="term-item">
+                        <h3 class="neumo-subhead">HR Team</h3>
+                        <p class="neumo-body">The human resources (HR) department and our professional employer organization</p>
+                    </div>
+                    <div class="term-item">
+                        <h3 class="neumo-subhead">Leadership Team</h3>
+                        <p class="neumo-body">Includes the CEO, CFO, CTO, Chief Product Officer, Chief Revenue Officer, SVP Human Resources, SVP Delivery & Operations, and the VP of Corporate Development & Strategy</p>
+                    </div>
+                    <div class="term-item">
+                        <h3 class="neumo-subhead">Company</h3>
+                        <p class="neumo-body">Neumo, of course!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Employment Classification -->
+            <div class="section-card">
+                <div class="section-card__header">
+                    <i data-lucide="users" class="icon icon-md"></i>
+                    <h2 class="neumo-h2">Employment Classification</h2>
+                </div>
+                <p class="neumo-body section-intro">As an employee of the company, you'll be classified as full time, part time, or temporary.</p>
+                
+                <div class="classification-grid">
+                    <div class="classification-item">
+                        <div class="classification-item__header">
+                            <i data-lucide="clock" class="icon icon-sm"></i>
+                            <h3 class="neumo-subhead">Full Time</h3>
+                        </div>
+                        <p class="neumo-body">Employees who are normally scheduled to work 30 or more hours each week. All full-time employees are eligible for all the company's offered benefits.</p>
+                    </div>
+                    
+                    <div class="classification-item">
+                        <div class="classification-item__header">
+                            <i data-lucide="clock-3" class="icon icon-sm"></i>
+                            <h3 class="neumo-subhead">Part Time</h3>
+                        </div>
+                        <p class="neumo-body">Employees who are normally scheduled to work less than 30 hours each week. While not eligible for most benefits, part-time employees may be eligible for the 401(k) plan.</p>
+                    </div>
+                    
+                    <div class="classification-item">
+                        <div class="classification-item__header">
+                            <i data-lucide="calendar" class="icon icon-sm"></i>
+                            <h3 class="neumo-subhead">Temporary</h3>
+                        </div>
+                        <p class="neumo-body">Employees employed for short-term assignments, typically six months or less. Temporary employees are not eligible for the company's offered benefits.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Employment Status -->
+            <div class="section-card">
+                <div class="section-card__header">
+                    <i data-lucide="briefcase" class="icon icon-md"></i>
+                    <h2 class="neumo-h2">Employment Status</h2>
+                </div>
+                
+                <div class="status-grid">
+                    <div class="status-item">
+                        <h3 class="neumo-subhead">Exempt</h3>
+                        <p class="neumo-body">Employees with job duties and pay that meet federal and state FLSA exemption requirements. Typically paid on a salaried basis and not eligible for overtime pay. Generally includes executive, administrative, professional, and certain outside sales roles.</p>
+                    </div>
+                    
+                    <div class="status-item">
+                        <h3 class="neumo-subhead">Non-exempt</h3>
+                        <p class="neumo-body">Typically paid hourly and eligible for overtime pay for hours worked in excess of 40 hours in one workweek. Manager approval required for all overtime work in advance.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Information -->
+            <div class="section-card">
+                <div class="section-card__header">
+                    <i data-lucide="credit-card" class="icon icon-md"></i>
+                    <h2 class="neumo-h2">Payment of Wages</h2>
+                </div>
+                
+                <div class="payment-info">
+                    <div class="payment-item">
+                        <h3 class="neumo-subhead"><i data-lucide="calendar-days" class="icon icon-sm"></i> Pay Schedule</h3>
+                        <p class="neumo-body">Paydays are bi-weekly every other Friday. If a payday falls on a holiday or weekend, you'll be paid on the preceding workday.</p>
+                    </div>
+                    
+                    <div class="payment-item">
+                        <h3 class="neumo-subhead"><i data-lucide="repeat" class="icon icon-sm"></i> Pay Cycle</h3>
+                        <p class="neumo-body">Our pay cycle runs Monday through Sunday. Hourly employees are paid one pay period in arrears.</p>
+                    </div>
+                    
+                    <div class="payment-item">
+                        <h3 class="neumo-subhead"><i data-lucide="percent" class="icon icon-sm"></i> Commission & Bonuses</h3>
+                        <p class="neumo-body">Employees must be actively employed on the date commission is paid. Commissions and bonuses are not considered earned until actually paid.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HRIS -->
+            <div class="section-card">
+                <div class="section-card__header">
+                    <i data-lucide="settings" class="icon icon-md"></i>
+                    <h2 class="neumo-h2">HR Information System</h2>
+                </div>
+                <p class="neumo-body">You have access to the HRIS to select benefits, update personal information, designate bank accounts for direct deposit, request time off, view pay stubs, and more. Contact the HR team if you need assistance logging in.</p>
+                
+                <div class="hris-actions">
+                    <a href="https://workforcenow.adp.com" target="_blank" class="btn btn--primary btn--external">
+                        <i data-lucide="external-link" class="icon icon-sm"></i>
+                        Access ADP Workforce Now
+                    </a>
+                </div>
+            </div>
+
+            <!-- Introductory Period -->
+            <div class="section-card section-card--highlight">
+                <div class="section-card__header">
+                    <i data-lucide="star" class="icon icon-md"></i>
+                    <h2 class="neumo-h2">Your First 90 Days</h2>
+                </div>
+                <p class="neumo-body">Your employment relationship will be a learning experience for both you and us! Your first 90 days are known as the introductory period.</p>
+                
+                <div class="intro-callout">
+                    <div class="intro-callout__icon">
+                        <i data-lucide="help-circle" class="icon icon-md"></i>
+                    </div>
+                    <div class="intro-callout__content">
+                        <h3 class="neumo-subhead">Ask Questions!</h3>
+                        <p class="neumo-body">We strongly encourage you to ask questions about anything - software, acronyms, processes, who to contact, or what you should be working on. The only bad questions are the ones you don't ask.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Using the Handbook: Quick Start Guide -->
+            <div class="section-card">
+                <div class="section-card__header">
+                    <i data-lucide="zap" class="icon icon-md"></i>
+                    <h2 class="neumo-h2">Using the Handbook: Quick Start Guide</h2>
+                </div>
+                <p class="neumo-body section-intro">
+                    Your partner in navigating policies, benefits, and everything that makes working at Neumo great.
+                </p>
+                <div class="guide-steps">
+                    <div class="guide-step">
+                        <div class="guide-step__number">1</div>
+                        <div class="guide-step__content">
+                            <h3 class="neumo-subhead">Set Your Work State</h3>
+                            <p class="neumo-body">
+                                Hit the state selector in the top-right corner to set your work location. This way, you'll see the policies and requirements that actually apply to you—no extra noise.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="guide-step">
+                        <div class="guide-step__number">2</div>
+                        <div class="guide-step__content">
+                            <h3 class="neumo-subhead">Browse Policies</h3>
+                            <p class="neumo-body">
+                                Navigate to the "Employee Handbook" tab to browse all company policies organized by category. Each policy card shows a summary and key information.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="guide-step">
+                        <div class="guide-step__number">3</div>
+                        <div class="guide-step__content">
+                            <h3 class="neumo-subhead">Search for Information</h3>
+                            <p class="neumo-body">
+                                Use the search bar to quickly find specific policies, keywords, or topics. Search results include policy titles, summaries, and full content.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="guide-step">
+                        <div class="guide-step__number">4</div>
+                        <div class="guide-step__content">
+                            <h3 class="neumo-subhead">View Full Policies</h3>
+                            <p class="neumo-body">
+                                Click "View Full Policy" on any policy card to open the detailed policy sheet with complete information, requirements, and state-specific details.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="contact-card">
+                <div class="contact-card__content">
+                    <div class="contact-card__text">
+                        <h3 class="neumo-subhead">Questions? We're Here to Help!</h3>
+                    </div>
+                    <div class="contact-card__actions">
+                        <a href="#support" class="btn btn--primary">
+                            <i data-lucide="help-circle" class="icon icon-xs"></i>
+                            Go to FAQ & Support
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Initialize Lucide icons for this component
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    });
+</script>

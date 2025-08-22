@@ -1,0 +1,289 @@
+@inherits UmbracoViewPage
+
+@*
+   FAQs & Support content component following Neumo brand guidelines
+   Features: FAQ sections, contact blocks, and support form
+*@
+
+<div class="faq-support">
+    <div class="faq-support__container">
+        <!-- Header Section -->
+        <div class="faq-support__header">
+            <div class="faq-support__header-content">
+                <svg class="faq-support__header-icon" fill="none" stroke="currentColor" viewBox="0 0 256 256">
+                    <circle cx="128" cy="128" r="96" stroke-width="16"/>
+                    <path d="m79 168 20-20 20 20M157 168l20-20 20 20M128 80v56l16 16" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+                </svg>
+                <h1 class="faq-support__title neumo-heading-bold">FAQs & Support</h1>
+                <p class="faq-support__subtitle neumo-body">
+                    Get help with the Employee Handbook and find answers to common questions.
+                </p>
+            </div>
+        </div>
+
+        <!-- Quick Contact Cards -->
+        <div class="faq-support__contact-cards">
+            <a class="contact-card" href="mailto:hr@neumo.com" aria-label="Email HR Support">
+                <div class="contact-card__icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 256 256" aria-hidden="true" focusable="false">
+                        <path d="M224 56v143.98c0 9.34-5.96 17.66-14.84 20.78L128 248 46.84 220.76C37.96 217.64 32 209.32 32 199.98V56c0-13.26 10.74-24 24-24h144c13.26 0 24 10.74 24 24Z" stroke-width="16"/>
+                        <path d="m80 72 39.98 39.98L168 64" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+                    </svg>
+                </div>
+                <div class="contact-card__content">
+                    <h3 class="contact-card__title neumo-heading-bold">HR Support</h3>
+                    <p class="contact-card__description neumo-body">
+                        Questions about policies, benefits, or workplace issues.
+                    </p>
+                    <span class="contact-card__email btn-link">hr@neumo.com</span>
+                </div>
+            </a>
+
+            <div class="contact-card">
+                <div class="contact-card__icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 256 256" aria-hidden="true" focusable="false">
+                        <rect x="32" y="48" width="192" height="160" rx="8" stroke-width="16"/>
+                        <path d="m32 80 96 56 96-56" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+                    </svg>
+                </div>
+                <div class="contact-card__content">
+                    <h3 class="contact-card__title neumo-heading-bold">IT Help Desk</h3>
+                    <p class="contact-card__description neumo-body">
+                        Technical issues with handbook access or system problems.
+                    </p>
+                    <a href="https://avenuinsights.service-now.com/sp" target="_blank" rel="noopener noreferrer" class="btn btn--primary btn--external">
+                        Service Now Portal
+                        <lucide-icon name="external-link" size="16"></lucide-icon>
+                    </a>
+                </div>
+            </div>
+
+            <a class="contact-card" href="mailto:handbook@neumo.com" aria-label="Email General Questions">
+                <div class="contact-card__icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 256 256" aria-hidden="true" focusable="false">
+                        <path d="m198 112-70 40-70-40" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+                        <path d="M128 152v104" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+                        <circle cx="128" cy="128" r="96" stroke-width="16"/>
+                    </svg>
+                </div>
+                <div class="contact-card__content">
+                    <h3 class="contact-card__title neumo-heading-bold">General Questions</h3>
+                    <p class="contact-card__description neumo-body">
+                        Other questions or feedback about the Employee Handbook.
+                    </p>
+                    <span class="contact-card__email btn-link">handbook@neumo.com</span>
+                </div>
+            </a>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="faq-support__faq-section">
+            <h2 class="faq-section__title neumo-heading-bold">Frequently Asked Questions</h2>
+            
+            <div class="faq-accordion">
+                <div class="faq-accordion__item">
+                    <button type="button" class="faq-accordion__trigger" onclick="toggleFAQ(this)">
+                        <span class="faq-accordion__question neumo-heading-bold">How do I search for specific policies?</span>
+                        <svg class="faq-accordion__icon" fill="none" stroke="currentColor" viewBox="0 0 256 256">
+                            <path d="m80 112 48 48 48-48" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+                        </svg>
+                    </button>
+                    <div class="faq-accordion__content">
+                        <div class="faq-accordion__answer neumo-body">
+                            <p>Use the search functionality in the Employee Handbook section. You can search by policy title, keywords, or category. The search will show relevant results with highlights.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-accordion__item">
+                    <button type="button" class="faq-accordion__trigger" onclick="toggleFAQ(this)">
+                        <span class="faq-accordion__question neumo-heading-bold">How often are policies updated?</span>
+                        <svg class="faq-accordion__icon" fill="none" stroke="currentColor" viewBox="0 0 256 256">
+                            <path d="m80 112 48 48 48-48" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+                        </svg>
+                    </button>
+                    <div class="faq-accordion__content">
+                        <div class="faq-accordion__answer neumo-body">
+                            <p>Policies are reviewed quarterly and updated as needed. You'll see the "Last Updated" date on each policy card. Important changes are communicated via email and Slack announcements.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-accordion__item">
+                    <button type="button" class="faq-accordion__trigger" onclick="toggleFAQ(this)">
+                        <span class="faq-accordion__question neumo-heading-bold">What if I can't find the information I need?</span>
+                        <svg class="faq-accordion__icon" fill="none" stroke="currentColor" viewBox="0 0 256 256">
+                            <path d="m80 112 48 48 48-48" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+                        </svg>
+                    </button>
+                    <div class="faq-accordion__content">
+                        <div class="faq-accordion__answer neumo-body">
+                            <p>Contact the appropriate team using the contact cards above, or use the support form below. HR can help with policy questions, IT with technical issues, and the general inbox for other handbook feedback.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-accordion__item">
+                    <button type="button" class="faq-accordion__trigger" onclick="toggleFAQ(this)">
+                        <span class="faq-accordion__question neumo-heading-bold">Do state-specific policies apply to me?</span>
+                        <svg class="faq-accordion__icon" fill="none" stroke="currentColor" viewBox="0 0 256 256">
+                            <path d="m80 112 48 48 48-48" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+                        </svg>
+                    </button>
+                    <div class="faq-accordion__content">
+                        <div class="faq-accordion__answer neumo-body">
+                            <p>Select your work state using the dropdown in the header. This will highlight policies with state-specific requirements and show relevant information for your location.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-accordion__item">
+                    <button type="button" class="faq-accordion__trigger" onclick="toggleFAQ(this)">
+                        <span class="faq-accordion__question neumo-heading-bold">Can I suggest improvements to the handbook?</span>
+                        <svg class="faq-accordion__icon" fill="none" stroke="currentColor" viewBox="0 0 256 256">
+                            <path d="m80 112 48 48 48-48" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+                        </svg>
+                    </button>
+                    <div class="faq-accordion__content">
+                        <div class="faq-accordion__answer neumo-body">
+                            <p>Absolutely! We welcome feedback and suggestions. Use the support form below or email handbook@neumo.com with your ideas for improving the handbook experience.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Support Form Section -->
+        <div class="faq-support__form-section">
+            <div class="support-form-container">
+                <div class="support-form__header">
+                    <h2 class="support-form__title neumo-heading-bold">Submit a Support Request</h2>
+                    <p class="support-form__subtitle neumo-body">
+                        Can't find what you're looking for? Send us a message and we'll get back to you.
+                    </p>
+                </div>
+
+                <form class="support-form" action="mailto:handbook@neumo.com" method="post" enctype="text/plain">
+                    <div class="form-grid">
+                        <div class="form-field">
+                            <label for="support-name" class="form-label neumo-body">Name *</label>
+                            <input 
+                                type="text" 
+                                id="support-name" 
+                                name="name" 
+                                class="form-input" 
+                                required 
+                                placeholder="Your full name"
+                            />
+                        </div>
+
+                        <div class="form-field">
+                            <label for="support-email" class="form-label neumo-body">Email *</label>
+                            <input 
+                                type="email" 
+                                id="support-email" 
+                                name="email" 
+                                class="form-input" 
+                                required 
+                                placeholder="your.email@neumo.com"
+                            />
+                        </div>
+
+                        <div class="form-field form-field--full">
+                            <label for="support-category" class="form-label neumo-body">Category</label>
+                            <select id="support-category" name="category" class="form-select">
+                                <option value="">Select a category</option>
+                                <option value="policy-question">Policy Question</option>
+                                <option value="technical-issue">Technical Issue</option>
+                                <option value="content-feedback">Content Feedback</option>
+                                <option value="general-inquiry">General Inquiry</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-field form-field--full">
+                            <label for="support-message" class="form-label neumo-body">Message *</label>
+                            <textarea 
+                                id="support-message" 
+                                name="message" 
+                                class="form-textarea" 
+                                required 
+                                rows="5" 
+                                placeholder="Please describe your question or issue in detail..."
+                            ></textarea>
+                        </div>
+                    </div>
+
+                    <div class="support-form__actions">
+                        <button type="submit" class="btn btn-primary">
+                            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 256 256">
+                                <path d="M224 56v143.98c0 9.34-5.96 17.66-14.84 20.78L128 248 46.84 220.76C37.96 217.64 32 209.32 32 199.98V56c0-13.26 10.74-24 24-24h144c13.26 0 24 10.74 24 24Z" stroke-width="16"/>
+                                <path d="m80 72 39.98 39.98L168 64" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+                            </svg>
+                            Send Message
+                        </button>
+                        <button type="reset" class="btn btn-outline">
+                            Clear Form
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// FAQ Accordion functionality
+function toggleFAQ(trigger) {
+    const item = trigger.closest('.faq-accordion__item');
+    const content = item.querySelector('.faq-accordion__content');
+    const icon = trigger.querySelector('.faq-accordion__icon');
+    const isOpen = item.classList.contains('faq-accordion__item--open');
+    
+    // Close all other items
+    document.querySelectorAll('.faq-accordion__item').forEach(otherItem => {
+        if (otherItem !== item) {
+            otherItem.classList.remove('faq-accordion__item--open');
+            const otherContent = otherItem.querySelector('.faq-accordion__content');
+            const otherIcon = otherItem.querySelector('.faq-accordion__icon');
+            otherContent.style.maxHeight = '0';
+            otherIcon.style.transform = 'rotate(0deg)';
+        }
+    });
+    
+    // Toggle current item
+    if (isOpen) {
+        item.classList.remove('faq-accordion__item--open');
+        content.style.maxHeight = '0';
+        icon.style.transform = 'rotate(0deg)';
+    } else {
+        item.classList.add('faq-accordion__item--open');
+        content.style.maxHeight = content.scrollHeight + 'px';
+        icon.style.transform = 'rotate(180deg)';
+    }
+}
+
+// Form handling
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('.support-form');
+    
+    form.addEventListener('submit', function(e) {
+        // Note: This is a simple mailto form. In production, you'd want to
+        // integrate with a proper form submission service or backend endpoint
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData);
+        
+        // Basic validation
+        if (!data.name || !data.email || !data.message) {
+            e.preventDefault();
+            alert('Please fill in all required fields.');
+            return;
+        }
+        
+        // Show success message (in production, handle this after successful submission)
+        setTimeout(() => {
+            alert('Thank you for your message. We\'ll get back to you soon!');
+        }, 100);
+    });
+});
+</script>

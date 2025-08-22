@@ -1,0 +1,33 @@
+﻿/* ==========================================================================
+   Footer Utility Styles (for Cards or Local Containers)
+   ========================================================================= */
+
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    border-top: 1px solid var(--color-border-card);
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    background-color: var(--color-bg-card-footer);
+}
+
+.footer-left,
+.footer-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.footer-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+
+    .button {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.75rem;
+    }
+}

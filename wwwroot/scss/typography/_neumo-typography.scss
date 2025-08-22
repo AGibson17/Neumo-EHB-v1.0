@@ -1,0 +1,67 @@
+/* ───── NEUMO BRAND TYPOGRAPHY ─────
+   Semantic typography classes following Neumo brand standards
+   Replaces utility class combinations with semantic patterns
+   ═════════════════════════════════════════════════════════ */
+
+/* Primary Heading Typography - DM Sans */
+.neumo-heading {
+    font-family: var(--font-neumo-heading);
+    font-weight: 300;
+    line-height: 1.25;
+    color: var(--color-text-heading);
+}
+
+.neumo-heading-bold {
+    font-family: var(--font-neumo-heading);
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--color-text-heading);
+}
+
+/* Secondary Heading Typography - Schibsted Grotesk */
+.neumo-h2 {
+    font-family: var(--font-neumo-body);
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--color-text-heading);
+}
+
+.neumo-subhead {
+    font-family: var(--font-neumo-body);
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--color-text-heading);
+}
+
+.neumo-eyebrow {
+    font-family: var(--font-neumo-body);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+}
+
+/* Body Typography */
+.neumo-body {
+    font-family: var(--font-neumo-body);
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--color-text-body);
+}
+
+.neumo-body-bold {
+    font-family: var(--font-neumo-body);
+    font-weight: 600;
+    line-height: 1.6;
+    color: var(--color-text-body);
+}
+
+.neumo-body-small {
+    font-family: var(--font-neumo-body);
+    font-weight: 400;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--color-text-body);
+}

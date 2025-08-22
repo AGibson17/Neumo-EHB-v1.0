@@ -1,0 +1,243 @@
+﻿/* ==========================================================================
+   Policy Accordion Component Styles
+   ========================================================================= */
+
+/* Flexbox container for vertical stacking */
+.policy-accordion-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+}
+
+/* Individual accordion item */
+.policy-accordion {
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-border-card);
+    border-radius: var(--radius-md);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Slightly raised for separation */
+    color: var(--color-text-card);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    width: 100%;
+    scroll-margin-top: 96px; /* prevent fixed header overlap when linked */
+
+    &[open] {
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12); /* More elevated when open */
+        border-color: var(--color-border-hover);
+        
+        .policy-accordion__summary {
+            background-color: rgba(218, 205, 242, 0.4); /* Active state with lilac */
+        }
+        
+        .policy-accordion__icon i {
+            transform: rotate(180deg);
+        }
+    }
+}
+
+/* Temporary highlight when navigating via hash */
+.policy-accordion--highlight {
+    box-shadow: 0 0 0 3px rgba(102, 51, 153, 0.25), 0 8px 25px rgba(0, 0, 0, 0.12);
+    transition: box-shadow 0.3s ease;
+}
+
+/* Accordion summary (clickable header) */
+.policy-accordion__summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 0;
+    background-color: #FFFFFF; /* Clean white background */
+    border-bottom: 1px solid var(--color-border-card);
+    transition: background-color 0.3s ease;
+    
+    &::-webkit-details-marker {
+        display: none;
+    }
+    
+    &::marker {
+        display: none;
+    }
+    
+    &:hover {
+        background-color: rgba(218, 205, 242, 0.15); /* Semi-transparent lilac on hover */
+    }
+    
+    &:focus-visible {
+        outline: 2px solid var(--brand-purple);
+        outline-offset: 2px;
+    }
+}
+
+.policy-accordion__header {
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.policy-accordion__header-content {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-grow: 1;
+}
+
+.policy-accordion__title {
+    font-family: 'Clarendon URW Extra Narrow', serif;
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--color-text-heading);
+    margin: 0;
+}
+
+.policy-accordion__icon {
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--color-icon-body);
+    
+    i {
+        transition: transform 0.2s ease;
+    }
+}
+
+.policy-accordion__date {
+    margin-left: auto;
+}
+
+.policy-accordion__summary-preview {
+    padding: 0 1.5rem 1.25rem;
+}
+
+.policy-accordion__summary-text {
+    font-family: 'Muli', sans-serif;
+    font-size: 0.875rem;
+    color: var(--color-text-body);
+    line-height: 1.5;
+    margin: 0 0 0.75rem 0;
+    padding: 0 0.25rem; /* Add slight internal padding for rich text */
+    overflow-wrap: break-word; /* Ensure long words don't break out */
+    
+    /* Handle rich text formatting better */
+    p, ul, ol, li {
+        margin: 0 0 0.5rem 0;
+        padding: 0;
+    }
+    
+    ul, ol {
+        padding-left: 1.25rem;
+    }
+    
+    strong, b {
+        font-weight: 600;
+    }
+}
+
+.policy-accordion__state-indicators {
+    margin-bottom: 0.75rem;
+}
+
+.policy-accordion__view-hint {
+    text-align: center;
+}
+
+.policy-accordion__view-text {
+    font-family: 'Muli', sans-serif;
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    font-style: italic;
+}
+
+/* Accordion content (expandable area) */
+.policy-accordion__content {
+    background-color: #FFFFFF;
+    padding: 1.5rem;
+    border-top: 1px solid var(--color-border-card);
+}
+
+.policy-accordion__section-title {
+    font-family: 'Clarendon URW Extra Narrow', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-heading);
+    margin: 0 0 0.75rem 0;
+    border-bottom: 1px solid var(--color-border-light);
+    padding-bottom: 0.5rem;
+}
+
+.policy-accordion__full-content {
+    margin-bottom: 1.5rem;
+}
+
+.policy-accordion__full-text {
+    font-family: 'Muli', sans-serif;
+    font-size: 0.875rem;
+    color: var(--color-text-body);
+    line-height: 1.6;
+    
+    /* Style content from rich text editor */
+    p {
+        margin-bottom: 1rem;
+        
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Clarendon URW Extra Narrow', serif;
+        color: var(--color-text-heading);
+        margin: 1.5rem 0 0.75rem 0;
+        
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+    
+    ul, ol {
+        margin: 1rem 0;
+        padding-left: 1.5rem;
+    }
+    
+    li {
+        margin-bottom: 0.5rem;
+    }
+}
+
+.policy-accordion__state-policies {
+    .policy-accordion__section-title {
+        margin-bottom: 1rem;
+    }
+}
+
+.policy-accordion__state-policy {
+    margin-bottom: 0.75rem;
+    
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.policy-accordion__state-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Muli', sans-serif;
+    font-size: 0.875rem;
+    
+    i {
+        width: 1rem;
+        height: 1rem;
+    }
+}
+
+/* Legacy grid class for backward compatibility - now converts to flex */
+.policy-card-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+}
