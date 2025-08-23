@@ -35,12 +35,12 @@ namespace Neumo.Handbook.Components
                 {
                     var createClicksTable = @"
                         CREATE TABLE PolicyCardClicks (
-                            Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                            PolicyId INTEGER NOT NULL,
-                            PolicyTitle TEXT NOT NULL,
-                            ClickedAt DATETIME NOT NULL,
-                            IpAddress TEXT,
-                            UserAgent TEXT
+                            Id INT IDENTITY(1,1) PRIMARY KEY,
+                            PolicyId INT NOT NULL,
+                            PolicyTitle NVARCHAR(255) NOT NULL,
+                            ClickedAt DATETIME2 NOT NULL,
+                            IpAddress NVARCHAR(45),
+                            UserAgent NVARCHAR(500)
                         );
                         CREATE INDEX IX_PolicyCardClicks_PolicyId ON PolicyCardClicks(PolicyId);
                         CREATE INDEX IX_PolicyCardClicks_ClickedAt ON PolicyCardClicks(ClickedAt);
@@ -54,11 +54,11 @@ namespace Neumo.Handbook.Components
                 {
                     var createCountsTable = @"
                         CREATE TABLE PolicyCardClickCounts (
-                            PolicyId INTEGER PRIMARY KEY,
-                            PolicyTitle TEXT NOT NULL,
-                            ClickCount INTEGER NOT NULL DEFAULT 0,
-                            FirstClicked DATETIME NOT NULL,
-                            LastClicked DATETIME NOT NULL
+                            PolicyId INT PRIMARY KEY,
+                            PolicyTitle NVARCHAR(255) NOT NULL,
+                            ClickCount INT NOT NULL DEFAULT 0,
+                            FirstClicked DATETIME2 NOT NULL,
+                            LastClicked DATETIME2 NOT NULL
                         );
                         CREATE INDEX IX_PolicyCardClickCounts_ClickCount ON PolicyCardClickCounts(ClickCount DESC);
                     ";
@@ -76,9 +76,11 @@ namespace Neumo.Handbook.Components
         {
             try
             {
-                // Simple check by trying to query the table
-                database.ExecuteScalar<int>($"SELECT 1 FROM {tableName} LIMIT 1");
-                return true;
+                // Check if table exists using SQL Server system tables
+                var count = database.ExecuteScalar<int>(
+                    "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = @tableName", 
+                    new { tableName });
+                return count > 0;
             }
             catch
             {
