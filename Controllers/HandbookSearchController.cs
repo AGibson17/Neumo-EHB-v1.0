@@ -24,6 +24,7 @@ namespace Neumo.Handbook.Controllers
         }
 
         [HttpGet("Search")]
+        [Obsolete]
         public IActionResult Search([FromQuery] string q, [FromQuery] int take = 20)
         {
             if (string.IsNullOrWhiteSpace(q) || q.Trim().Length < 2)
