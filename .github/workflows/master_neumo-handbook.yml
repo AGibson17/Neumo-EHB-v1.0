@@ -62,4 +62,9 @@ jobs:
           app-name: 'neumo-handbook'
           slot-name: 'Production'
           package: .
+        env:
+          Umbraco__CMS__Unattended__InstallUnattended: 'true'
+          Umbraco__CMS__Unattended__UnattendedUserName: 'admin@neumo.com'
+          Umbraco__CMS__Unattended__UnattendedUserEmail: 'admin@neumo.com'
+          Umbraco__CMS__Unattended__UnattendedUserPassword: ${{ secrets.UMBRACO_ADMIN_PASSWORD }}
           
