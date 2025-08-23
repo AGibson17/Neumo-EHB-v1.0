@@ -8,7 +8,7 @@
 
 .layout-header {
     border-bottom: 2px solid var(--brand-purple);
-    background: linear-gradient(135deg, #AEA7F4 0%, var(--brand-purple) 100%);
+    background: linear-gradient(135deg, var(--brand-purple) 0%, var(--brand-navy) 100%);
     backdrop-filter: blur(4px);
     position: sticky;
     top: 0;
@@ -116,7 +116,7 @@
 }
 
 .header-brand-divider {
-    border-left: 3px solid var(--brand-navy);
+    border-left: 3px solid var(--brand-white);
     padding-left: 1rem;
 }
 
@@ -124,7 +124,7 @@
     font-family: var(--font-neumo-heading); /* DM Sans - Primary Type */
     font-weight: 600; 
     font-size: 1.25rem;
-    color: var(--brand-navy);
+    color: var(--brand-white);
 }
 
 .header-actions {
