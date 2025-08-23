@@ -4,14 +4,15 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Umbraco.Cms.Infrastructure.Persistence;
 using Umbraco.Cms.Core.Services;
+using NPoco;
 
 namespace Neumo.Handbook.Models
 {
     // Simple model to track policy card clicks
-    [Table("PolicyCardClicks")]
+    [TableName("PolicyCardClicks")]
+    [PrimaryKey("Id")]
     public class PolicyCardClick
     {
-        [Key]
         public int Id { get; set; }
         
         public int PolicyId { get; set; }
@@ -26,10 +27,10 @@ namespace Neumo.Handbook.Models
     }
     
     // Aggregated click counts for easier querying
-    [Table("PolicyCardClickCounts")]
+    [TableName("PolicyCardClickCounts")]
+    [PrimaryKey("PolicyId", AutoIncrement = false)]
     public class PolicyCardClickCount
     {
-        [Key]
         public int PolicyId { get; set; }
         
         public string PolicyTitle { get; set; } = string.Empty;

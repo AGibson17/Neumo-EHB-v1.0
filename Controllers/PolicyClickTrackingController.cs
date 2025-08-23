@@ -81,16 +81,15 @@ namespace Neumo.Handbook.Controllers
 
                 if (existingCount == null)
                 {
-                    // First click for this policy
-                    var newCount = new PolicyCardClickCount
-                    {
-                        PolicyId = policyId,
-                        PolicyTitle = policyTitleInput ?? "Unknown",
-                        ClickCount = 1,
-                        FirstClicked = DateTime.UtcNow,
-                        LastClicked = DateTime.UtcNow
-                    };
-                    await database.InsertAsync(newCount);
+                    // First click for this policy - use direct SQL to ensure PolicyId is included
+                    await database.ExecuteAsync(
+                        "INSERT INTO PolicyCardClickCounts (PolicyId, PolicyTitle, ClickCount, FirstClicked, LastClicked) VALUES (@0, @1, @2, @3, @4)",
+                        policyId,
+                        policyTitleInput ?? "Unknown",
+                        1,
+                        DateTime.UtcNow,
+                        DateTime.UtcNow
+                    );
                 }
                 else
                 {
