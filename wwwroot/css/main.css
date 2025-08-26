@@ -26,8 +26,8 @@
 
 /* ───── BASE + GLOBAL ───── */
 /* ==========================================================================
-  Global Base Styles & Reset
-  ========================================================================= */
+   Global Base Styles & Reset
+   ========================================================================= */
 /* Box sizing + field elements */
 *,
 *::before,
@@ -119,8 +119,8 @@ mark {
   }
 }
 /* ==========================================================================
-  Scrollbar Styling (Webkit + Firefox fallback)
-  ========================================================================= */
+   Scrollbar Styling (Webkit + Firefox fallback)
+   ========================================================================= */
 .scroll-container {
   scrollbar-width: thin;
   scrollbar-color: var(--color-border) transparent;
@@ -321,8 +321,8 @@ mark {
 }
 
 /* ==========================================================================
-  Shadow Tokens
-  ========================================================================= */
+   Shadow Tokens
+   ========================================================================= */
 :root {
   --shadow-xs: 0 1px 2px 0 oklch(0% 0 0 / 0.05);
   --shadow-sm: 0 1px 3px 0 oklch(0% 0 0 / 0.1), 0 1px 2px -1px oklch(0% 0 0 / 0.1);
@@ -910,9 +910,9 @@ mark {
 
 /* ───── LAYOUT ───── */
 /* ==========================================================================
-  Layout Grid Structure for Employee Handbook
-  Based on original Tailwind + TypeScript layout logic
-  ========================================================================= */
+   Layout Grid Structure for Employee Handbook
+   Based on original Tailwind + TypeScript layout logic
+   ========================================================================= */
 html,
 body {
   height: 100%;
@@ -1276,8 +1276,8 @@ body {
   }
 }
 /* ==========================================================================
-  Sidebar Navigation Content Styles
-  ========================================================================= */
+   Sidebar Navigation Content Styles
+   ========================================================================= */
 .category-nav {
   display: flex;
   flex-direction: column;
@@ -1325,8 +1325,8 @@ body {
 }
 
 /* ==========================================================================
-  Footer Utility Styles (for Cards or Local Containers)
-  ========================================================================= */
+   Footer Utility Styles (for Cards or Local Containers)
+   ========================================================================= */
 .footer {
   display: flex;
   align-items: center;
@@ -1365,7 +1365,7 @@ body {
 
 .layout-header {
   border-bottom: 2px solid var(--brand-purple);
-  background: linear-gradient(135deg, #AEA7F4 0%, var(--brand-purple) 100%);
+  background: linear-gradient(135deg, var(--brand-purple) 0%, var(--brand-navy) 100%);
   backdrop-filter: blur(4px);
   position: sticky;
   top: 0;
@@ -1471,7 +1471,7 @@ body {
 }
 
 .header-brand-divider {
-  border-left: 3px solid var(--brand-navy);
+  border-left: 3px solid var(--brand-white);
   padding-left: 1rem;
 }
 
@@ -1479,7 +1479,7 @@ body {
   font-family: var(--font-neumo-heading); /* DM Sans - Primary Type */
   font-weight: 600;
   font-size: 1.25rem;
-  color: var(--brand-navy);
+  color: var(--brand-white);
 }
 
 .header-actions {
@@ -1522,8 +1522,8 @@ body {
 }
 /* ───── COMPONENTS ───── */
 /* ==========================================================================
-  Policy Accordion Component Styles
-  ========================================================================= */
+   Policy Accordion Component Styles
+   ========================================================================= */
 /* Flexbox container for vertical stacking */
 .policy-accordion-container {
   display: flex;
@@ -3264,8 +3264,8 @@ body {
 }
 
 /* ==========================================================================
-  Modal Component Styles
-  ========================================================================= */
+   Modal Component Styles
+   ========================================================================= */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -3827,8 +3827,8 @@ body {
 }
 
 /* ==========================================================================
-  Badge Component Styles
-  ========================================================================= */
+   Badge Component Styles
+   ========================================================================= */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -3875,8 +3875,8 @@ body {
 }
 
 /* ==========================================================================
-  Alert Component Styles
-  ========================================================================= */
+   Alert Component Styles
+   ========================================================================= */
 .alert {
   display: flex;
   align-items: flex-start;
@@ -3932,8 +3932,8 @@ body {
 }
 
 /* ==========================================================================
-  Input Elements (text, select, textarea, etc.)
-  ========================================================================= */
+   Input Elements (text, select, textarea, etc.)
+   ========================================================================= */
 .input,
 .select,
 .textarea {
@@ -3970,8 +3970,8 @@ body {
 }
 
 /* ==========================================================================
-  Form Layout and Grouping
-  ========================================================================= */
+   Form Layout and Grouping
+   ========================================================================= */
 .form-group {
   display: flex;
   flex-direction: column;
@@ -3994,8 +3994,8 @@ body {
 }
 
 /* ==========================================================================
-  Tabs Component (for Radix-compatible tab layout)
-  ========================================================================= */
+   Tabs Component (for Radix-compatible tab layout)
+   ========================================================================= */
 .tabs {
   display: flex;
   flex-direction: column;
@@ -4484,8 +4484,8 @@ body {
   transition: all 0.2s ease;
 }
 .handbook-search__result-item:hover {
-  background: rgba(119, 94, 211, 0.05);
-  transform: translateX(4px);
+  background: rgba(119, 94, 211, 0.08);
+  border-left: 3px solid var(--brand-purple);
 }
 .handbook-search__result-item--active {
   background: rgba(119, 94, 211, 0.08);
@@ -4568,6 +4568,216 @@ body {
     margin: 0.5rem -1rem 0;
     border-radius: 0 0 var(--radius) var(--radius);
     max-height: 20rem;
+  }
+}
+/* Search History Styles */
+.handbook-search__history {
+  padding: 1rem 0;
+}
+.handbook-search__history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem 0.75rem;
+  border-bottom: 1px solid rgba(119, 94, 211, 0.1);
+  margin-bottom: 0.75rem;
+}
+.handbook-search__history-header h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--brand-navy);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+.handbook-search__history-clear {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: var(--radius);
+  transition: all 0.2s ease;
+}
+.handbook-search__history-clear:hover {
+  color: var(--brand-purple);
+  background: rgba(119, 94, 211, 0.1);
+}
+.handbook-search__history-clear i {
+  font-size: 0.875rem;
+}
+.handbook-search__history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.handbook-search__history-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  border-radius: var(--radius);
+  transition: all 0.2s ease;
+  color: var(--color-text);
+  font-size: 0.875rem;
+}
+.handbook-search__history-item:hover {
+  background: rgba(119, 94, 211, 0.08);
+  color: var(--brand-navy);
+}
+.handbook-search__history-item i {
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  flex-shrink: 0;
+}
+.handbook-search__history-item span {
+  flex: 1;
+}
+
+/* Enhanced Search Highlighting */
+.search-highlight {
+  background: linear-gradient(135deg, rgba(119, 94, 211, 0.2) 0%, rgba(218, 205, 242, 0.3) 100%);
+  color: var(--brand-navy);
+  font-weight: 600;
+  padding: 0.125rem 0.25rem;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 1px 2px rgba(119, 94, 211, 0.1);
+}
+
+/* Enhanced Loading States */
+.handbook-search__loading {
+  display: flex;
+  align-items: center;
+  padding: 2rem 1.5rem;
+}
+.handbook-search__loading-spinner {
+  margin-right: 1rem;
+}
+.handbook-search__loading-spinner i {
+  font-size: 1.5rem;
+  color: var(--brand-purple);
+  animation: spin 1s linear infinite;
+}
+.handbook-search__loading-text {
+  flex: 1;
+  text-align: left;
+}
+.handbook-search__loading-text span {
+  display: block;
+  font-weight: 600;
+  color: var(--color-text-dark);
+  margin-bottom: 0.25rem;
+  font-size: 0.95rem;
+}
+.handbook-search__loading-text small {
+  display: block;
+  color: var(--color-text-muted);
+  font-size: 0.825rem;
+  opacity: 0.8;
+}
+
+/* No Results State */
+.handbook-search__no-results {
+  padding: 3rem 2rem;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+.handbook-search__no-results-icon {
+  margin-bottom: 1.5rem;
+}
+.handbook-search__no-results-icon i {
+  font-size: 3rem;
+  color: var(--color-text-lighter);
+  opacity: 0.6;
+}
+.handbook-search__no-results h3 {
+  margin-bottom: 0.75rem;
+  color: var(--color-text-dark);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+.handbook-search__no-results p {
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+.handbook-search__no-results-suggestions {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(119, 94, 211, 0.1);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  text-align: left;
+  max-width: 300px;
+  margin: 0 auto;
+}
+.handbook-search__no-results-suggestions h4 {
+  margin-bottom: 0.75rem;
+  color: var(--brand-navy);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.handbook-search__no-results-suggestions ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.handbook-search__no-results-suggestions ul li {
+  padding: 0.35rem 0;
+  font-size: 0.875rem;
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+}
+.handbook-search__no-results-suggestions ul li:before {
+  content: "•";
+  margin-right: 0.75rem;
+  color: var(--brand-purple);
+  font-weight: bold;
+}
+
+/* Results Header */
+.handbook-search__results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(119, 94, 211, 0.1);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+}
+.handbook-search__results-header:first-child {
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.handbook-search__results-count {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+.handbook-search__results-count strong {
+  color: var(--brand-purple);
+  font-weight: 600;
+}
+
+.handbook-search__results-performance {
+  font-size: 0.75rem;
+  color: var(--color-text-lighter);
+  font-style: italic;
+  opacity: 0.8;
+}
+
+/* Spin Animation */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 /* ───── GETTING STARTED COMPONENT ─────
