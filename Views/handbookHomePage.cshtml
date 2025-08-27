@@ -199,6 +199,9 @@
                             }
                             @count Categories
                         </span>
+                        <button id="policyExportBtn" type="button" class="btn btn-secondary" title="Export policies as CSV" style="margin-left:12px;">
+                            Policy Export
+                        </button>
                     </div>
 
                     <div class="categories-grid">
@@ -294,4 +297,17 @@ function switchToTab(tabId) {
         history.replaceState(null, null, `#${tabId}`);
     }
 }
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const btn = document.getElementById('policyExportBtn');
+    if (!btn) return;
+    btn.addEventListener('click', function() {
+        // Open API endpoint to download CSV
+        const url = '/api/PolicyExport/ExportCsv';
+        // Trigger file download
+        window.location.href = url;
+    });
+});
 </script>

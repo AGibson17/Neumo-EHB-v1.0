@@ -47,6 +47,7 @@
 @use './components/tabs';
 @use './components/icons';
 @use './components/handbook-search'; // MODERN SEARCH COMPONENT
+@use './components/floating-nav'; // FLOATING NAVIGATION FOR CATEGORIES
 // @use './components/guide'; // OLD GUIDE STYLES - COMMENTED OUT
 @use './components/getting-started-clean'; // NEW GETTING STARTED STYLES
 @use './components/faq-support';
