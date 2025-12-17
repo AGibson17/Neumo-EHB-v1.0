@@ -3,89 +3,96 @@
     Layout = null;
 }
 @*
-   Welcome Content component converted from React/TSX to Razor
-   Matches the WelcomeContent.tsx component exactly
-   Features: Hero section, mission, values, and quick stats
+   Welcome Content - Redesigned with Shared Values
+   Features: Hero section, mission, masonry values grid
 *@
 
-<div class="welcome-card">
-     <!-- Simplified Hero Section -->
-     <div class="hero-banner">
-         <div class="hero-text">
-             <div class="hero-title">
-                 <i data-lucide="sparkles" class="icon icon-xl"></i>
-                 <h1 class="neumo-heading-bold">Welcome to Neumo!</h1>
-             </div>
-             <p class="hero-intro">
-                 Welcome to the team! Whether you are just starting out or have been with us for years, we're so excited to have you as a part of our team.
-             </p>
-             <p class="hero-description">
-                 You are the foundation of our success. It is through your talent, commitment, and collaboration that we deliver the services our customers depend on and create new opportunities for growth and innovation. We look forward to building the future of Neumo together and wish you every success in your role.
-             </p>
-         </div>
-         <div class="hero-mascot">
-             <img 
-                 src="~/images/neumo-mascot-navy-downDog-reflect.svg" 
-                 alt="Neumo mascot" 
-                 class="mascot-image"
-             />
-         </div>
-     </div>
-    <div class="welcome-card__inner">
-        <div class="space-y-lg-welcome">
-
-            <!-- Mission and Values -->
-            <div class="space-y-lg-welcome">
-                <div class="mission-card">
-                    <h2 class="neumo-h2">Our Mission</h2>
-                    <p class="neumo-body">
-                        Deliver exceptional quality, unparalleled service, and a customer-focused experience that fosters trust and integrity. We strive to exceed expectations and build lasting partnerships that drive success for our customers and the communities we serve.
-                    </p>
-                </div>
-
-                <div class="values-card">
-                    <h2 class="neumo-h2">Our Core Values</h2>
-                    <p class="neumo-body">
-                        At Neumo, our core values guide our decisions, shape our culture, and define how we interact with our clients, partners, and each other.
-                    </p>
-                    
-                    <div class="values-card__grid">
-                        <div class="values-card__item">
-                            <h3 class="neumo-subhead">Trust</h3>
-                            <p class="neumo-body">
-                                We genuinely care for those around us, are respectful, and lead by example. We share what we know to make those around us better.
-                            </p>
-                        </div>
-                        
-                        <div class="values-card__item">
-                            <h3 class="neumo-subhead">Client-Focused</h3>
-                            <p class="neumo-body">
-                                Our customers, partners, and you are our priority. We provide meaningful expertise by actively listening and delivering on our commitments.
-                            </p>
-                        </div>
-                        
-                        <div class="values-card__item">
-                            <h3 class="neumo-subhead">Integrity</h3>
-                            <p class="neumo-body">
-                                We uphold the values and principles of the Company in every action and decision, doing the right thing for our customers, partners, and you.
-                            </p>
-                        </div>
-                        
-                        <div class="values-card__item">
-                            <h3 class="neumo-subhead">Responsive</h3>
-                            <p class="neumo-body">
-                                We act with a sense of urgency for our customers, partners, and you, always engaged and ready to perform.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+<div class="welcome-page">
+    <!-- Hero Section -->
+    <div class="welcome-hero-banner">
+        <div class="welcome-hero-banner__text">
+            <div class="welcome-hero-banner__title">
+                <i data-lucide="sparkles"></i>
+                <h1>Welcome to Neumo!</h1>
             </div>
+            <p class="welcome-hero-banner__intro">
+                Welcome to the team! Whether you are just starting out or have been with us for years, we're so excited to have you as a part of our team.
+            </p>
+            <p class="welcome-hero-banner__description">
+                You are the foundation of our success. It is through your talent, commitment, and collaboration that we deliver the services our customers depend on and create new opportunities for growth and innovation. We look forward to building the future of Neumo together and wish you every success in your role.
+            </p>
+        </div>
+        <div class="welcome-hero-banner__mascot">
+            <img 
+                src="~/images/neumo-mascot-navy-downDog-reflect.svg" 
+                alt="Neumo mascot" 
+            />
         </div>
     </div>
+
+    <!-- Mission Section -->
+    <section class="welcome-mission">
+        <h2>Our Mission</h2>
+        <p>
+            Deliver exceptional quality, unparalleled service, and a customer-focused experience that fosters trust and integrity. We strive to exceed expectations and build lasting partnerships that drive success for our customers and the communities we serve.
+        </p>
+    </section>
+
+    <!-- Shared Values Section -->
+    <section class="welcome-values">
+        <div class="welcome-values__header">
+            <h2>Our Shared Values</h2>
+        </div>
+        
+        <div class="values-grid">
+            <!-- Row 1: Serve Customers (featured/tall) + Own It & Win Together stacked -->
+            <article class="value-card value-card--featured">
+                <div class="value-card__icon">
+                    <img src="~/images/customers-new.svg" alt="" />
+                </div>
+                <h3 class="value-card__name">Serve Customers</h3>
+                <p class="value-card__tagline">Serve those who serve the public.</p>
+            </article>
+
+            <div class="values-stack">
+                <article class="value-card">
+                    <div class="value-card__icon">
+                        <img src="~/images/own-it.svg" alt="" />
+                    </div>
+                    <h3 class="value-card__name">Own It</h3>
+                    <p class="value-card__tagline">What we do matters, take pride in it.</p>
+                </article>
+
+                <article class="value-card">
+                    <div class="value-card__icon">
+                        <img src="~/images/win-together.svg" alt="" />
+                    </div>
+                    <h3 class="value-card__name">Win Together</h3>
+                    <p class="value-card__tagline">Shared success beats solo effort.</p>
+                </article>
+            </div>
+
+            <!-- Row 2: Evolve Every Day + Earn Trust (wide accent) -->
+            <article class="value-card">
+                <div class="value-card__icon">
+                    <img src="~/images/evolve-grow.svg" alt="" />
+                </div>
+                <h3 class="value-card__name">Evolve Every Day</h3>
+                <p class="value-card__tagline">Innovate, learn and improve.</p>
+            </article>
+
+            <article class="value-card value-card--accent">
+                <div class="value-card__icon">
+                    <img src="~/images/earn-trust.svg" alt="" />
+                </div>
+                <h3 class="value-card__name">Earn Trust</h3>
+                <p class="value-card__tagline">Act with integrity and be reliable.</p>
+            </article>
+        </div>
+    </section>
 </div>
 
 <script>
-    // Initialize Lucide icons for this component
     document.addEventListener('DOMContentLoaded', function() {
         if (typeof lucide !== 'undefined') {
             lucide.createIcons();

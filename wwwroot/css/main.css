@@ -5707,7 +5707,7 @@ body {
   gap: 0.5rem;
   padding: 1.25rem;
   background: white;
-  border: 1px solid rgba(119, 94, 211, 0.12);
+  border: 1.5px solid rgba(119, 94, 211, 0.658);
   border-radius: 0.75rem;
   transition: all 0.2s ease;
   box-shadow: 0 2px 8px rgba(10, 17, 40, 0.04);
@@ -5720,54 +5720,63 @@ body {
   font-weight: 700;
   font-size: 1rem;
   color: var(--brand-purple);
+  text-align: center;
 }
 .terms-list__item dd {
   margin: 0;
   font-size: 0.875rem;
   color: var(--color-text-muted);
   line-height: 1.6;
+  text-align: center;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   QUICKSTART STEPS
+   QUICKSTART STEPS - Single Column, Centered
    ═══════════════════════════════════════════════════════════════════════════ */
-.quickstart-steps {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.75rem;
+.welcome-card--tall {
+  display: flex;
+  flex-direction: column;
 }
-@media (max-width: 500px) {
-  .quickstart-steps {
-    grid-template-columns: 1fr;
-  }
+.welcome-card--tall .welcome-card__body {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.quickstart-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 520px;
 }
 
 .quickstart-step {
   display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  padding: 1rem;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
   background: white;
   border: 1px solid rgba(119, 94, 211, 0.12);
-  border-radius: 0.625rem;
+  border-radius: 0.75rem;
   transition: all 0.2s ease;
   box-shadow: 0 2px 8px rgba(10, 17, 40, 0.04);
 }
 .quickstart-step:hover {
   border-color: rgba(119, 94, 211, 0.3);
   box-shadow: 0 4px 16px rgba(119, 94, 211, 0.12);
-  transform: translateY(-1px);
+  transform: translateX(4px);
 }
 
 .quickstart-step__num {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2rem;
-  height: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
   background: linear-gradient(135deg, var(--brand-purple) 0%, var(--brand-navy) 100%);
   color: white;
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 700;
   border-radius: 50%;
   flex-shrink: 0;
@@ -5779,13 +5788,13 @@ body {
 }
 .quickstart-step__text strong {
   display: block;
-  font-size: 0.875rem;
+  font-size: 1.25rem;
   font-weight: 600;
   color: var(--brand-navy);
   margin-bottom: 0.125rem;
 }
 .quickstart-step__text span {
-  font-size: 0.75rem;
+  font-size: 1rem;
   color: var(--color-text-muted);
   line-height: 1.4;
 }
@@ -6058,6 +6067,271 @@ body {
 .welcome-footer__btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(119, 94, 211, 0.45);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   WELCOME PAGE - Redesigned with Shared Values Masonry Grid
+   ═══════════════════════════════════════════════════════════════════════════ */
+.welcome-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.5rem;
+}
+@media (max-width: 640px) {
+  .welcome-page {
+    padding: 1rem;
+    gap: 1.25rem;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   HERO BANNER
+   ═══════════════════════════════════════════════════════════════════════════ */
+.welcome-hero-banner {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem 2.5rem;
+  background: linear-gradient(135deg, var(--brand-purple) 0%, var(--brand-navy) 100%);
+  border-radius: 1rem;
+  box-shadow: 0 10px 40px rgba(10, 17, 40, 0.2), 0 4px 12px rgba(119, 94, 211, 0.15);
+}
+@media (max-width: 768px) {
+  .welcome-hero-banner {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem 1.5rem;
+  }
+}
+
+.welcome-hero-banner__text {
+  flex: 1;
+}
+
+.welcome-hero-banner__title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+@media (max-width: 768px) {
+  .welcome-hero-banner__title {
+    justify-content: center;
+  }
+}
+.welcome-hero-banner__title svg, .welcome-hero-banner__title i {
+  width: 2rem;
+  height: 2rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+.welcome-hero-banner__title h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+}
+@media (max-width: 640px) {
+  .welcome-hero-banner__title h1 {
+    font-size: 1.5rem;
+  }
+}
+
+.welcome-hero-banner__intro {
+  font-size: 1.0625rem;
+  font-weight: 500;
+  color: white;
+  margin: 0 0 0.75rem 0;
+  line-height: 1.5;
+}
+
+.welcome-hero-banner__description {
+  font-size: 0.9375rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+  line-height: 1.65;
+}
+
+.welcome-hero-banner__mascot {
+  flex-shrink: 0;
+}
+.welcome-hero-banner__mascot img {
+  width: 140px;
+  height: auto;
+}
+@media (max-width: 768px) {
+  .welcome-hero-banner__mascot img {
+    width: 120px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MISSION SECTION
+   ═══════════════════════════════════════════════════════════════════════════ */
+.welcome-mission {
+  background: white;
+  border: 1px solid rgba(119, 94, 211, 0.12);
+  border-radius: 0.875rem;
+  padding: 1.75rem 2rem;
+  box-shadow: 0 4px 16px rgba(10, 17, 40, 0.08), 0 2px 6px rgba(119, 94, 211, 0.06);
+}
+.welcome-mission h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--brand-navy);
+  margin: 0 0 0.875rem 0;
+}
+.welcome-mission p {
+  font-size: 0.9375rem;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SHARED VALUES SECTION
+   ═══════════════════════════════════════════════════════════════════════════ */
+.welcome-values {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.welcome-values__header h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--brand-navy);
+  margin: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   VALUES GRID - Masonry-style Layout (Concept C)
+   ═══════════════════════════════════════════════════════════════════════════ */
+.values-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 1.25rem;
+}
+@media (max-width: 768px) {
+  .values-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Stack for Own It + Win Together */
+.values-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   VALUE CARD - Base Styles
+   ═══════════════════════════════════════════════════════════════════════════ */
+.value-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1.75rem 1.5rem;
+  background: white;
+  border: 1px solid rgba(119, 94, 211, 0.12);
+  border-radius: 0.875rem;
+  box-shadow: 0 4px 16px rgba(10, 17, 40, 0.08), 0 2px 6px rgba(119, 94, 211, 0.06);
+  transition: all 0.25s ease;
+}
+.value-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(10, 17, 40, 0.12), 0 4px 12px rgba(119, 94, 211, 0.1);
+  border-color: rgba(119, 94, 211, 0.25);
+}
+
+.value-card__icon {
+  width: 4rem;
+  height: 4rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.value-card__icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.value-card__name {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--brand-purple);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 0.5rem 0;
+}
+
+.value-card__tagline {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--brand-navy);
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* ───── Featured Card (Serve Customers - Tall) ───── */
+.value-card--featured {
+  grid-row: span 1;
+  padding: 2.5rem 2rem;
+  background: linear-gradient(145deg, rgba(119, 94, 211, 0.04) 0%, white 100%);
+  border-color: rgba(119, 94, 211, 0.2);
+}
+.value-card--featured .value-card__icon {
+  width: 5rem;
+  height: 5rem;
+  margin-bottom: 1.25rem;
+}
+.value-card--featured .value-card__name {
+  font-size: 0.875rem;
+}
+.value-card--featured .value-card__tagline {
+  font-size: 1.25rem;
+}
+.value-card--featured:hover {
+  background: linear-gradient(145deg, rgba(119, 94, 211, 0.08) 0%, white 100%);
+}
+@media (max-width: 768px) {
+  .value-card--featured {
+    padding: 2rem 1.5rem;
+  }
+  .value-card--featured .value-card__icon {
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+  .value-card--featured .value-card__tagline {
+    font-size: 1.125rem;
+  }
+}
+
+/* ───── Accent Card (Earn Trust - Wide) ───── */
+.value-card--accent {
+  background: linear-gradient(135deg, var(--brand-purple) 0%, var(--brand-navy) 100%);
+  border: none;
+  box-shadow: 0 8px 30px rgba(119, 94, 211, 0.25), 0 4px 12px rgba(10, 17, 40, 0.15);
+}
+.value-card--accent .value-card__icon {
+  /* If the icon needs to be inverted/lighter for contrast */
+  filter: brightness(0) invert(1);
+  opacity: 0.9;
+}
+.value-card--accent .value-card__name {
+  color: rgba(255, 255, 255, 0.8);
+}
+.value-card--accent .value-card__tagline {
+  color: white;
+}
+.value-card--accent:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(119, 94, 211, 0.35), 0 6px 16px rgba(10, 17, 40, 0.2);
 }
 
 /* ===============================================
