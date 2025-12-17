@@ -206,63 +206,7 @@
     </div>
 
     <script>
-        // CEO Letter Modal Functions
-        function showCEOLetterModal() {
-            document.getElementById('ceo-letter-modal').style.display = 'flex';
-        }
-        
-        function closeCEOLetterModal() {
-            document.getElementById('ceo-letter-modal').style.display = 'none';
-            // Set cookie to remember that user has seen the letter
-            setCookie('ceo_letter_shown', 'true', 365); // Cookie expires in 1 year
-            
-            // Navigate to Getting Started tab for a handbook-like experience
-            navigateToGettingStarted();
-        }
-        
-        function navigateToGettingStarted() {
-            // Check if we're on the home page (has tab content sections)
-            const hasTabContent = document.querySelector('.tab-content');
-            
-            if (hasTabContent) {
-                // We're on home page - simulate clicking the Getting Started tab
-                const gettingStartedTab = document.querySelector('[data-tab="guide"]');
-                if (gettingStartedTab) {
-                    gettingStartedTab.click();
-                }
-            } else {
-                // We're on a different page - navigate to home with Getting Started tab
-                localStorage.setItem('activeTab', 'guide');
-                window.location.href = '/#guide';
-            }
-        }
-        
-        function setCookie(name, value, days) {
-            const expires = new Date();
-            expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
-            document.cookie = name + '=' + value + ';expires=' + expires.toUTCString() + ';path=/';
-        }
-        
-        function getCookie(name) {
-            const nameEQ = name + "=";
-            const ca = document.cookie.split(';');
-            for(let i = 0; i < ca.length; i++) {
-                let c = ca[i];
-                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-            }
-            return null;
-        }
-        
-        // Check if user is first-time visitor and show CEO letter modal
-        document.addEventListener('DOMContentLoaded', function() {
-            if (!getCookie('ceo_letter_shown')) {
-                // Small delay to let page load completely
-                setTimeout(function() {
-                    showCEOLetterModal();
-                }, 500);
-            }
-        });
+       
         
         // Close modal on Escape key (for CEO letter too)
         document.addEventListener('keydown', function(event) {
