@@ -35,17 +35,17 @@ namespace Neumo.Handbook.Components
                 {
                     var createClicksTable = @"
                         CREATE TABLE PolicyCardClicks (
-                            Id INT IDENTITY(1,1) PRIMARY KEY,
-                            PolicyId INT NOT NULL,
-                            PolicyTitle NVARCHAR(255) NOT NULL,
-                            ClickedAt DATETIME2 NOT NULL,
-                            IpAddress NVARCHAR(45),
-                            UserAgent NVARCHAR(500)
-                        );
-                        CREATE INDEX IX_PolicyCardClicks_PolicyId ON PolicyCardClicks(PolicyId);
-                        CREATE INDEX IX_PolicyCardClicks_ClickedAt ON PolicyCardClicks(ClickedAt);
+                            Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            PolicyId INTEGER NOT NULL,
+                            PolicyTitle TEXT NOT NULL,
+                            ClickedAt TEXT NOT NULL,
+                            IpAddress TEXT,
+                            UserAgent TEXT
+                        )
                     ";
                     database.Execute(createClicksTable);
+                    database.Execute("CREATE INDEX IF NOT EXISTS IX_PolicyCardClicks_PolicyId ON PolicyCardClicks(PolicyId)");
+                    database.Execute("CREATE INDEX IF NOT EXISTS IX_PolicyCardClicks_ClickedAt ON PolicyCardClicks(ClickedAt)");
                     _logger.LogInformation("Created PolicyCardClicks table");
                 }
 
@@ -54,15 +54,15 @@ namespace Neumo.Handbook.Components
                 {
                     var createCountsTable = @"
                         CREATE TABLE PolicyCardClickCounts (
-                            PolicyId INT PRIMARY KEY,
-                            PolicyTitle NVARCHAR(255) NOT NULL,
-                            ClickCount INT NOT NULL DEFAULT 0,
-                            FirstClicked DATETIME2 NOT NULL,
-                            LastClicked DATETIME2 NOT NULL
-                        );
-                        CREATE INDEX IX_PolicyCardClickCounts_ClickCount ON PolicyCardClickCounts(ClickCount DESC);
+                            PolicyId INTEGER PRIMARY KEY,
+                            PolicyTitle TEXT NOT NULL,
+                            ClickCount INTEGER NOT NULL DEFAULT 0,
+                            FirstClicked TEXT NOT NULL,
+                            LastClicked TEXT NOT NULL
+                        )
                     ";
                     database.Execute(createCountsTable);
+                    database.Execute("CREATE INDEX IF NOT EXISTS IX_PolicyCardClickCounts_ClickCount ON PolicyCardClickCounts(ClickCount DESC)");
                     _logger.LogInformation("Created PolicyCardClickCounts table");
                 }
             }
@@ -76,10 +76,10 @@ namespace Neumo.Handbook.Components
         {
             try
             {
-                // Check if table exists using SQL Server system tables
+                // Check if table exists using SQLite's sqlite_master
                 var count = database.ExecuteScalar<int>(
-                    "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = @tableName", 
-                    new { tableName });
+                    "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name=@0", 
+                    tableName);
                 return count > 0;
             }
             catch

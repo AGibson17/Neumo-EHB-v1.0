@@ -1,6 +1,6 @@
 /**
- * Modern Handbook Search Functionality
- * Provides real-time search across handbook content
+ * Enhanced Handbook Search Functionality
+ * Features: Real-time search, search history, trending searches
  */
 
 class HandbookSearch {
@@ -8,13 +8,28 @@ class HandbookSearch {
         this.searchInput = document.getElementById('handbookSearch');
         this.clearButton = document.querySelector('.handbook-search__clear');
         this.resultsContainer = document.getElementById('searchResults');
+        this.wrapper = this.searchInput ? this.searchInput.closest('.handbook-search__input-wrapper') : null;
+        
         this.searchData = this.initializeSearchData();
         this.isSearching = false;
         this.searchTimeout = null;
-    this.wrapper = this.searchInput ? this.searchInput.closest('.handbook-search__input-wrapper') : null;
-    this.activeIndex = -1;
+        this.activeIndex = -1;
+        
+        // Search history config
+        this.historyKey = 'neumo_handbook_search_history';
+        this.maxHistoryItems = 5;
+        
+        // Trending searches (can be updated from API/click tracking)
+        this.trendingSearches = [
+            { term: 'PTO', icon: 'clock' },
+            { term: 'Remote Work', icon: 'home' },
+            { term: 'Benefits', icon: 'heart' },
+            { term: 'Holidays', icon: 'calendar' },
+            { term: 'FMLA', icon: 'shield' }
+        ];
         
         this.initializeEventListeners();
+        this.loadTrendingFromAPI();
     }
     
     initializeEventListeners() {
@@ -26,37 +41,19 @@ class HandbookSearch {
             this.handleSearch(query);
         });
         
-        // Focus events for UI states
+        // Focus event - show history/trending when empty
         this.searchInput.addEventListener('focus', () => {
-            this.showResults();
+            const query = this.searchInput.value.trim();
+            if (query.length === 0) {
+                this.showHistoryAndTrending();
+            } else {
+                this.showResults();
+            }
         });
 
         // Keyboard navigation
         this.searchInput.addEventListener('keydown', (e) => {
-            const items = Array.from(this.resultsContainer.querySelectorAll('.handbook-search__result-item'));
-            if (!items.length) return;
-            
-            if (e.key === 'ArrowDown') {
-                e.preventDefault();
-                this.activeIndex = (this.activeIndex + 1) % items.length;
-                this.updateActiveItem(items);
-            } else if (e.key === 'ArrowUp') {
-                e.preventDefault();
-                this.activeIndex = (this.activeIndex - 1 + items.length) % items.length;
-                this.updateActiveItem(items);
-            } else if (e.key === 'Enter') {
-                if (this.activeIndex >= 0 && this.activeIndex < items.length) {
-                    const itemEl = items[this.activeIndex];
-                    const url = itemEl.dataset.url;
-                    const type = itemEl.dataset.type;
-                    const id = itemEl.dataset.id;
-                    const categoryUrl = itemEl.dataset.categoryUrl;
-                    const dest = this.buildDestinationUrl({ url, type, id, categoryUrl });
-                    if (dest && dest !== '#') window.location.href = dest;
-                }
-            } else if (e.key === 'Escape') {
-                this.hideResults();
-            }
+            this.handleKeyboardNavigation(e);
         });
         
         // Click outside to hide results
@@ -70,6 +67,228 @@ class HandbookSearch {
         if (this.clearButton) {
             this.clearButton.addEventListener('click', () => {
                 this.clearSearch();
+            });
+        }
+    }
+    
+    handleKeyboardNavigation(e) {
+        const items = Array.from(this.resultsContainer.querySelectorAll('.handbook-search__result-item, .handbook-search__suggestion-item'));
+        if (!items.length && !['Escape'].includes(e.key)) return;
+        
+        switch(e.key) {
+            case 'ArrowDown':
+                e.preventDefault();
+                this.activeIndex = (this.activeIndex + 1) % items.length;
+                this.updateActiveItem(items);
+                break;
+            case 'ArrowUp':
+                e.preventDefault();
+                this.activeIndex = (this.activeIndex - 1 + items.length) % items.length;
+                this.updateActiveItem(items);
+                break;
+            case 'Enter':
+                if (this.activeIndex >= 0 && this.activeIndex < items.length) {
+                    const itemEl = items[this.activeIndex];
+                    // Check if it's a suggestion item (history/trending)
+                    if (itemEl.classList.contains('handbook-search__suggestion-item')) {
+                        const term = itemEl.dataset.term;
+                        this.searchInput.value = term;
+                        this.handleSearch(term);
+                    } else {
+                        // Regular result item
+                        const url = itemEl.dataset.url;
+                        const type = itemEl.dataset.type;
+                        const id = itemEl.dataset.id;
+                        const categoryUrl = itemEl.dataset.categoryUrl;
+                        const title = itemEl.querySelector('.handbook-search__result-item__title')?.textContent?.trim();
+                        
+                        // Save to history before navigating
+                        if (this.searchInput.value.trim()) {
+                            this.addToHistory(this.searchInput.value.trim());
+                        }
+                        
+                        const dest = this.buildDestinationUrl({ url, type, id, categoryUrl });
+                        if (dest && dest !== '#') window.location.href = dest;
+                    }
+                }
+                break;
+            case 'Escape':
+                this.hideResults();
+                this.searchInput.blur();
+                break;
+        }
+    }
+    
+    // ==================== Search History ====================
+    
+    getSearchHistory() {
+        try {
+            const history = localStorage.getItem(this.historyKey);
+            return history ? JSON.parse(history) : [];
+        } catch (e) {
+            return [];
+        }
+    }
+    
+    addToHistory(term) {
+        if (!term || term.length < 2) return;
+        
+        let history = this.getSearchHistory();
+        
+        // Remove if already exists (we'll add it to the front)
+        history = history.filter(item => item.toLowerCase() !== term.toLowerCase());
+        
+        // Add to front
+        history.unshift(term);
+        
+        // Keep only max items
+        history = history.slice(0, this.maxHistoryItems);
+        
+        try {
+            localStorage.setItem(this.historyKey, JSON.stringify(history));
+        } catch (e) {
+            // localStorage might be full or disabled
+        }
+    }
+    
+    removeFromHistory(term) {
+        let history = this.getSearchHistory();
+        history = history.filter(item => item.toLowerCase() !== term.toLowerCase());
+        
+        try {
+            localStorage.setItem(this.historyKey, JSON.stringify(history));
+        } catch (e) {
+            // Ignore errors
+        }
+        
+        // Refresh the display
+        this.showHistoryAndTrending();
+    }
+    
+    clearAllHistory() {
+        try {
+            localStorage.removeItem(this.historyKey);
+        } catch (e) {
+            // Ignore errors
+        }
+        this.showHistoryAndTrending();
+    }
+    
+    // ==================== Trending Searches ====================
+    
+    async loadTrendingFromAPI() {
+        // Try to fetch trending searches from the click tracking API
+        try {
+            const resp = await fetch('/api/PolicyClickTracking/Trending?count=5');
+            if (resp.ok) {
+                const data = await resp.json();
+                if (Array.isArray(data) && data.length > 0) {
+                    this.trendingSearches = data.map(item => ({
+                        term: item.title || item.name,
+                        icon: 'trending-up'
+                    }));
+                }
+            }
+        } catch (e) {
+            // Keep default trending searches
+        }
+    }
+    
+    // ==================== Display Methods ====================
+    
+    showHistoryAndTrending() {
+        const history = this.getSearchHistory();
+        let html = '';
+        
+        // Recent Searches Section
+        if (history.length > 0) {
+            html += `
+                <div class="handbook-search__section">
+                    <div class="handbook-search__section-header">
+                        <span class="handbook-search__section-title">
+                            <i data-lucide="history"></i>
+                            Recent Searches
+                        </span>
+                        <button class="handbook-search__clear-history" type="button">Clear All</button>
+                    </div>
+                    <div class="handbook-search__suggestions">
+                        ${history.map(term => `
+                            <div class="handbook-search__suggestion-item handbook-search__suggestion-item--history" data-term="${this.escapeHtml(term)}">
+                                <i data-lucide="clock"></i>
+                                <span>${this.escapeHtml(term)}</span>
+                                <button class="handbook-search__remove-history" data-term="${this.escapeHtml(term)}" type="button" aria-label="Remove from history">
+                                    <i data-lucide="x"></i>
+                                </button>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Trending Searches Section
+        if (this.trendingSearches.length > 0) {
+            html += `
+                <div class="handbook-search__section">
+                    <div class="handbook-search__section-header">
+                        <span class="handbook-search__section-title">
+                            <i data-lucide="trending-up"></i>
+                            Trending Searches
+                        </span>
+                    </div>
+                    <div class="handbook-search__suggestions">
+                        ${this.trendingSearches.map(item => `
+                            <div class="handbook-search__suggestion-item handbook-search__suggestion-item--trending" data-term="${this.escapeHtml(item.term)}">
+                                <i data-lucide="${item.icon || 'search'}"></i>
+                                <span>${this.escapeHtml(item.term)}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Fallback if nothing to show
+        if (!html) {
+            html = `
+                <div class="handbook-search__empty-state">
+                    <i data-lucide="search"></i>
+                    <h3>Search the Handbook</h3>
+                    <p>Find policies, procedures, and important information</p>
+                </div>
+            `;
+        }
+        
+        this.resultsContainer.innerHTML = html;
+        this.showResults();
+        this.activeIndex = -1;
+        
+        // Add event listeners for suggestion items
+        this.resultsContainer.querySelectorAll('.handbook-search__suggestion-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                // Don't trigger if clicking the remove button
+                if (e.target.closest('.handbook-search__remove-history')) return;
+                
+                const term = item.dataset.term;
+                this.searchInput.value = term;
+                this.handleSearch(term);
+            });
+        });
+        
+        // Add event listeners for remove buttons
+        this.resultsContainer.querySelectorAll('.handbook-search__remove-history').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const term = btn.dataset.term;
+                this.removeFromHistory(term);
+            });
+        });
+        
+        // Add event listener for clear all button
+        const clearAllBtn = this.resultsContainer.querySelector('.handbook-search__clear-history');
+        if (clearAllBtn) {
+            clearAllBtn.addEventListener('click', () => {
+                this.clearAllHistory();
             });
         }
     }
@@ -97,35 +316,7 @@ class HandbookSearch {
             }
         });
         
-        // Add some example policy items (in a real implementation, this would come from your CMS)
-        const examplePolicies = [
-            {
-                title: 'Remote Work Policy',
-                description: 'Guidelines for working from home and flexible work arrangements',
-                category: 'Work Policies',
-                url: '#remote-work',
-                state: 'Active',
-                type: 'policy'
-            },
-            {
-                title: 'Code of Conduct',
-                description: 'Professional behavior expectations and ethical standards',
-                category: 'Company Standards',
-                url: '#code-of-conduct',
-                state: 'Active',
-                type: 'policy'
-            },
-            {
-                title: 'Time Off Policy',
-                description: 'Vacation, sick leave, and personal time off procedures',
-                category: 'Benefits',
-                url: '#time-off',
-                state: 'Active',
-                type: 'policy'
-            }
-        ];
-        
-    return [...searchData, ...examplePolicies];
+        return searchData;
     }
     
     handleSearch(query) {
@@ -137,8 +328,8 @@ class HandbookSearch {
         // Update clear button visibility
         this.updateClearButton(query);
         
-    if (query.length === 0) {
-            this.showEmptyState();
+        if (query.length === 0) {
+            this.showHistoryAndTrending();
             return;
         }
         
@@ -155,6 +346,8 @@ class HandbookSearch {
     
     async performSearch(query) {
         this.isSearching = true;
+        this.showLoadingState();
+        
         try {
             const resp = await fetch(`/api/HandbookSearch/Search?q=${encodeURIComponent(query)}`);
             if (!resp.ok) throw new Error('Search API error');
@@ -170,10 +363,25 @@ class HandbookSearch {
                 const searchableText = `${item.title} ${item.description} ${item.category}`.toLowerCase();
                 return searchableText.includes(query.toLowerCase());
             });
-            this.displayResults(results, query);
+            
+            if (results.length > 0) {
+                this.displayResults(results, query);
+            } else {
+                this.showNoResults(query);
+            }
         } finally {
             this.isSearching = false;
         }
+    }
+    
+    showLoadingState() {
+        this.resultsContainer.innerHTML = `
+            <div class="handbook-search__loading">
+                <div class="handbook-search__loading-spinner"></div>
+                <span>Searching...</span>
+            </div>
+        `;
+        this.showResults();
     }
     
     displayResults(results, query) {
@@ -183,32 +391,70 @@ class HandbookSearch {
         }
         
         this.activeIndex = -1;
-        const resultsHtml = results.map((item, idx) => `
-            <div class="handbook-search__result-item" id="result-${idx}" role="option" aria-selected="false" data-url="${item.url || ''}" data-type="${item.type || ''}" data-id="${item.id || ''}" data-category-url="${item.categoryUrl || ''}">
-                <div class="handbook-search__result-item__title">
-                    ${this.highlightQuery(item.title, query)}
-                </div>
-                <div class="handbook-search__result-item__excerpt">
-                    ${this.highlightQuery(item.description, query)}
-                </div>
-                <span class="handbook-search__result-item__category">
-                    ${item.category}
-                </span>
-            </div>
-        `).join('');
         
-    this.resultsContainer.innerHTML = resultsHtml;
-    this.showResults();
+        const resultsHtml = `
+            <div class="handbook-search__section">
+                <div class="handbook-search__section-header">
+                    <span class="handbook-search__section-title">
+                        <i data-lucide="file-text"></i>
+                        Results
+                    </span>
+                    <span class="handbook-search__result-count">${results.length} found</span>
+                </div>
+                ${results.map((item, idx) => `
+                    <div class="handbook-search__result-item" 
+                         id="result-${idx}" 
+                         role="option" 
+                         aria-selected="false" 
+                         data-url="${item.url || ''}" 
+                         data-type="${item.type || ''}" 
+                         data-id="${item.id || ''}" 
+                         data-category-url="${item.categoryUrl || ''}">
+                        <div class="handbook-search__result-item__icon">
+                            <i data-lucide="${item.type === 'category' ? 'folder' : 'file-text'}"></i>
+                        </div>
+                        <div class="handbook-search__result-item__content">
+                            <div class="handbook-search__result-item__title">
+                                ${this.highlightQuery(item.title, query)}
+                            </div>
+                            <div class="handbook-search__result-item__excerpt">
+                                ${this.highlightQuery(item.description || '', query)}
+                            </div>
+                            <span class="handbook-search__result-item__category">
+                                ${item.category}
+                            </span>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+        
+        this.resultsContainer.innerHTML = resultsHtml;
+        this.showResults();
         
         // Add click handlers to result items
         this.resultsContainer.querySelectorAll('.handbook-search__result-item').forEach(item => {
             item.addEventListener('click', () => {
+                // Save search to history
+                this.addToHistory(query);
+                
+                // Debug: log what we're working with
+                console.log('Search result clicked:', {
+                    url: item.dataset.url,
+                    type: item.dataset.type,
+                    id: item.dataset.id,
+                    categoryUrl: item.dataset.categoryUrl
+                });
+                
                 const dest = this.buildDestinationUrl({
                     url: item.dataset.url,
                     type: item.dataset.type,
                     id: item.dataset.id,
                     categoryUrl: item.dataset.categoryUrl
                 });
+                
+                console.log('Navigating to:', dest);
+                
                 if (dest && dest !== '#') {
                     window.location.href = dest;
                 }
@@ -218,14 +464,17 @@ class HandbookSearch {
 
     buildDestinationUrl({ url, type, id, categoryUrl }) {
         // For policy results, navigate to the parent category with a policy hash
-        if (type === 'policy') {
-            if (!id) return url || '#';
-            const base = categoryUrl || url || '';
-            if (!base) return '#';
+        if (type === 'policy' && id) {
+            // The API returns the parent category URL in both `url` and `categoryUrl`
+            const base = url || categoryUrl || '';
+            if (!base || base === '#') return '#';
+            // Ensure we have a clean base URL without existing hash
             const clean = base.split('#')[0];
-            return `${clean}#policy-${id}`;
+            // Remove trailing slash if present for consistency
+            const normalizedBase = clean.endsWith('/') ? clean.slice(0, -1) : clean;
+            return `${normalizedBase}#policy-${id}`;
         }
-        // For categories and other items, use the provided url
+        // For categories and other items, use the provided url directly
         return url || '#';
     }
 
@@ -233,16 +482,17 @@ class HandbookSearch {
         items.forEach((el, i) => {
             const isActive = i === this.activeIndex;
             el.classList.toggle('handbook-search__result-item--active', isActive);
+            el.classList.toggle('handbook-search__suggestion-item--active', isActive);
             el.setAttribute('aria-selected', isActive ? 'true' : 'false');
             if (isActive) {
                 el.scrollIntoView({ block: 'nearest' });
-                this.searchInput.setAttribute('aria-activedescendant', el.id);
+                this.searchInput.setAttribute('aria-activedescendant', el.id || '');
             }
         });
     }
     
     highlightQuery(text, query) {
-        if (!query || query.length < 2) return text;
+        if (!text || !query || query.length < 2) return text || '';
         
         const regex = new RegExp(`(${this.escapeRegex(query)})`, 'gi');
         return text.replace(regex, '<mark>$1</mark>');
@@ -252,26 +502,21 @@ class HandbookSearch {
         return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
     
-    showEmptyState() {
-    this.resultsContainer.innerHTML = `
-            <div class="handbook-search__empty-state">
-                <i data-lucide="search"></i>
-                <h3>Start Typing to Search</h3>
-                <p>Enter keywords to find relevant policies and information</p>
-            </div>
-        `;
-    this.showResults();
+    escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
     }
     
     showMinimumCharacterMessage() {
-    this.resultsContainer.innerHTML = `
+        this.resultsContainer.innerHTML = `
             <div class="handbook-search__empty-state">
                 <i data-lucide="type"></i>
                 <h3>Keep Typing...</h3>
                 <p>Enter at least 2 characters to search</p>
             </div>
         `;
-    this.showResults();
+        this.showResults();
     }
     
     showNoResults(query) {
@@ -279,10 +524,29 @@ class HandbookSearch {
             <div class="handbook-search__empty-state">
                 <i data-lucide="search-x"></i>
                 <h3>No Results Found</h3>
-                <p>No policies or content found for "${query}". Try different keywords.</p>
+                <p>No policies or content found for "${this.escapeHtml(query)}"</p>
+                <div class="handbook-search__no-results-suggestions">
+                    <span>Try searching for:</span>
+                    <div class="handbook-search__suggestions handbook-search__suggestions--inline">
+                        ${this.trendingSearches.slice(0, 3).map(item => `
+                            <button class="handbook-search__suggestion-chip" data-term="${this.escapeHtml(item.term)}" type="button">
+                                ${this.escapeHtml(item.term)}
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
             </div>
         `;
         this.showResults();
+        
+        // Add click handlers for suggestion chips
+        this.resultsContainer.querySelectorAll('.handbook-search__suggestion-chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                const term = chip.dataset.term;
+                this.searchInput.value = term;
+                this.handleSearch(term);
+            });
+        });
     }
     
     showResults() {
@@ -308,9 +572,9 @@ class HandbookSearch {
     }
     
     clearSearch() {
-    this.searchInput.value = '';
+        this.searchInput.value = '';
         this.clearButton?.classList.remove('visible');
-        this.showEmptyState();
+        this.showHistoryAndTrending();
         this.searchInput.focus();
     }
 }
@@ -319,7 +583,7 @@ class HandbookSearch {
 document.addEventListener('DOMContentLoaded', function() {
     // Only initialize on pages with the search component
     if (document.getElementById('handbookSearch')) {
-        new HandbookSearch();
+        window.handbookSearch = new HandbookSearch();
     }
 });
 
@@ -328,9 +592,8 @@ document.addEventListener('tabChanged', function(event) {
     if (event.detail.tabId === 'handbook') {
         // Small delay to ensure the DOM is updated
         setTimeout(() => {
-            if (document.getElementById('handbookSearch') && !window.handbookSearchInitialized) {
-                new HandbookSearch();
-                window.handbookSearchInitialized = true;
+            if (document.getElementById('handbookSearch') && !window.handbookSearch) {
+                window.handbookSearch = new HandbookSearch();
             }
         }, 100);
     }
